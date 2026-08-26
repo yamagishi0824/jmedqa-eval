@@ -1,0 +1,24 @@
+# Site-specific settings (may contain tokens / internal paths)
+scripts/env.sh
+.env
+
+# Input dataset (not redistributed from this repository)
+data/*.csv
+data/*.jsonl
+
+# Run artifacts
+outputs/
+outputs_*/
+results/
+logs_slurm/
+logs/
+
+# Caches and virtualenvs
+.cache/
+.venv/
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+
+# OS noise
+.DS_Store
