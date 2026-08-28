@@ -487,6 +487,106 @@ def make_light_record(
     return rec
 
 
+def load_extract_jobs(path: Path) -> List[Dict[str, Path]]:
+    """Read an extraction job list (TSV: stage1_full_in<TAB>out_full<TAB>out_light)."""
+    jobs: List[Dict[str, Path]] = []
+    with path.open("r", encoding="utf-8") as f:
+        for line_no, line in enumerate(f, 1):
+            line = line.rstrip("\n")
+            if not line.strip() or line.lstrip().startswith("#"):
+                continue
+            parts = line.split("\t")
+            if len(parts) != 3:
+                raise ValueError(
+                    f"invalid jobs line (need 3 tab-separated fields): {path}:{line_no}: {line}"
+                )
+            jobs.append(
+                {
+                    "stage1_in": Path(parts[0]),
+                    "out_full": Path(parts[1]),
+                    "out_light": Path(parts[2]),
+                }
+            )
+    return jobs
+
+
+def run_extract_job(
+    extractor_llm: LLM,
+    extractor_tokenizer: Any,
+    extractor_sampling: SamplingParams,
+    generate_fn,
+    stage1_in: Path,
+    out_full: Path,
+    out_light: Path,
+    extractor_batch_size: int = 0,
+) -> int:
+    """Run extraction for one stage1 file using an already loaded extractor LLM."""
+    out_full.parent.mkdir(parents=True, exist_ok=True)
+    out_light.parent.mkdir(parents=True, exist_ok=True)
+
+    rows = enrich_rows(load_jsonl(stage1_in))
+
+    stage1_raw = [str(r.get("raw_output", "") or "") for r in rows]
+    extractor_prompts = [
+        build_extractor_prompt(extractor_tokenizer, raw, row.get("_answer_mode", "option"))
+        for raw, row in zip(stage1_raw, rows)
+    ]
+
+    extractor_raw: List[str] = []
+    if extractor_batch_size > 0:
+        for start in range(0, len(extractor_prompts), extractor_batch_size):
+            extractor_raw.extend(
+                generate_fn(
+                    extractor_llm,
+                    extractor_prompts[start:start + extractor_batch_size],
+                    extractor_sampling,
+                )
+            )
+    else:
+        extractor_raw = generate_fn(extractor_llm, extractor_prompts, extractor_sampling)
+
+    light_records: List[Dict[str, Any]] = []
+    raw_ref = str(out_full)
+    with out_full.open("w", encoding="utf-8") as f_full:
+        for row, raw1, raw2 in zip(rows, stage1_raw, extractor_raw):
+            text1 = str(raw1)
+            text2 = strip_think(raw2)
+
+            allowed = sorted([k for k in row.get("_options_obj", {}).keys() if isinstance(k, str)])
+            row_mode = row.get("_answer_mode", "option")
+            pred_stage1_direct = parse_prediction_from_text(text1, row_mode, allowed)
+            pred_extracted = parse_prediction_from_text(text2, row_mode, allowed)
+            flags = analyze_extraction(row, pred_stage1_direct, pred_extracted)
+
+            full_rec = {k: v for k, v in row.items() if not k.startswith("_")}
+            full_rec["answer_mode"] = row_mode
+            full_rec["expected_answer_count"] = row.get("_answer_count_int", 1)
+            full_rec["prediction_stage1_direct"] = pred_stage1_direct
+            full_rec["prediction"] = pred_extracted
+            full_rec["extractor_output"] = text2
+            for k, v in flags.items():
+                full_rec[k] = v
+            f_full.write(json.dumps(full_rec, ensure_ascii=False) + "\n")
+
+            light_records.append(
+                make_light_record(
+                    row=row,
+                    prediction=pred_extracted,
+                    raw_output_file=raw_ref,
+                    stage1_direct=pred_stage1_direct,
+                    extraction_flags=flags,
+                )
+            )
+
+    fieldnames = list(light_records[0].keys()) if light_records else []
+    with out_light.open("w", encoding="utf-8", newline="") as f_light:
+        writer = csv.DictWriter(f_light, fieldnames=fieldnames)
+        if fieldnames:
+            writer.writeheader()
+            writer.writerows(light_records)
+    return len(light_records)
+
+
 def main() -> None:
     parser = argparse.ArgumentParser(description="jmedqa inference + LLM extraction")
 
@@ -495,8 +595,18 @@ def main() -> None:
     parser.add_argument("--extractor-model", required=True)
     parser.add_argument("--input-csv", required=True)
     parser.add_argument("--stage1-full-in", type=str, default=None)
-    parser.add_argument("--out-full", required=True)
-    parser.add_argument("--out-light", required=True)
+    parser.add_argument("--out-full", default=None)
+    parser.add_argument("--out-light", default=None)
+    parser.add_argument(
+        "--jobs-file",
+        type=str,
+        default=None,
+        help=(
+            "extract mode only. TSV file, one job per line: "
+            "stage1_full_in<TAB>out_full<TAB>out_light. "
+            "All jobs are processed with a single extractor model load."
+        ),
+    )
     parser.add_argument(
         "--question-variants",
         choices=QUESTION_VARIANTS,
@@ -540,10 +650,19 @@ def main() -> None:
     )
 
     in_path = Path(args.input_csv)
-    out_full = Path(args.out_full)
-    out_light = Path(args.out_light)
-    out_full.parent.mkdir(parents=True, exist_ok=True)
-    out_light.parent.mkdir(parents=True, exist_ok=True)
+
+    if args.jobs_file is not None and args.mode != "extract":
+        parser.error("--jobs-file is only supported with --mode extract")
+
+    out_full = None
+    out_light = None
+    if args.jobs_file is None:
+        if not args.out_full or not args.out_light:
+            parser.error("--out-full and --out-light are required unless --jobs-file is given")
+        out_full = Path(args.out_full)
+        out_light = Path(args.out_light)
+        out_full.parent.mkdir(parents=True, exist_ok=True)
+        out_light.parent.mkdir(parents=True, exist_ok=True)
 
     def run_generate(model: LLM, batch_prompts: List[str], sp: SamplingParams) -> List[str]:
         outs = model.generate(batch_prompts, sp)
@@ -650,11 +769,29 @@ def main() -> None:
         return
 
     # mode == "extract"
-    stage1_in = Path(args.stage1_full_in) if args.stage1_full_in else out_full
-    if not stage1_in.exists():
-        raise FileNotFoundError(f"stage1 full jsonl not found: {stage1_in}")
+    if args.jobs_file:
+        raw_jobs = load_extract_jobs(Path(args.jobs_file))
+    else:
+        stage1_in = Path(args.stage1_full_in) if args.stage1_full_in else out_full
+        if not stage1_in.exists():
+            raise FileNotFoundError(f"stage1 full jsonl not found: {stage1_in}")
+        raw_jobs = [{"stage1_in": stage1_in, "out_full": out_full, "out_light": out_light}]
 
-    rows = enrich_rows(load_jsonl(stage1_in))
+    # Skip jobs without stage1 input and jobs whose outputs already exist.
+    jobs: List[Dict[str, Path]] = []
+    for job in raw_jobs:
+        if not job["stage1_in"].exists():
+            print(f"SKIP_EXTRACT reason=stage1_missing stage1={job['stage1_in']}")
+            continue
+        if job["out_full"].exists() and job["out_light"].exists():
+            print(f"SKIP_EXTRACT reason=already_done full={job['out_full']} light={job['out_light']}")
+            continue
+        jobs.append(job)
+
+    if not jobs:
+        print("DONE_EXTRACT jobs=0 (nothing to extract)")
+        return
+
     extractor_tokenizer = AutoTokenizer.from_pretrained(
         args.extractor_model,
         trust_remote_code=args.trust_remote_code,
@@ -677,67 +814,34 @@ def main() -> None:
     }
     if "DeepSeek-V3.2" in args.extractor_model:
         extractor_llm_kwargs["tokenizer_mode"] = "deepseek_v32"
+    # The extractor model is loaded once and reused for every job.
     extractor_llm = LLM(**extractor_llm_kwargs)
 
-    stage1_raw = [str(r.get("raw_output", "") or "") for r in rows]
-    extractor_prompts = [
-        build_extractor_prompt(extractor_tokenizer, raw, row.get("_answer_mode", "option"))
-        for raw, row in zip(stage1_raw, rows)
-    ]
-
-    extractor_raw: List[str] = []
-    if args.extractor_batch_size > 0:
-        for start in range(0, len(extractor_prompts), args.extractor_batch_size):
-            extractor_raw.extend(
-                run_generate(
-                    extractor_llm,
-                    extractor_prompts[start:start + args.extractor_batch_size],
-                    extractor_sampling,
-                )
+    n_ok = 0
+    n_failed = 0
+    for i, job in enumerate(jobs, 1):
+        print(f"RUN_EXTRACT [{i}/{len(jobs)}] stage1={job['stage1_in']} -> full={job['out_full']}", flush=True)
+        try:
+            n_rows = run_extract_job(
+                extractor_llm=extractor_llm,
+                extractor_tokenizer=extractor_tokenizer,
+                extractor_sampling=extractor_sampling,
+                generate_fn=run_generate,
+                stage1_in=job["stage1_in"],
+                out_full=job["out_full"],
+                out_light=job["out_light"],
+                extractor_batch_size=args.extractor_batch_size,
             )
-    else:
-        extractor_raw = run_generate(extractor_llm, extractor_prompts, extractor_sampling)
+        except Exception as e:  # one failing job must not abort the remaining ones
+            n_failed += 1
+            print(f"FAILED_EXTRACT stage1={job['stage1_in']} error={type(e).__name__}: {e}")
+            continue
+        n_ok += 1
+        print(f"DONE_EXTRACT full={job['out_full']} light={job['out_light']} rows={n_rows}", flush=True)
 
-    light_records: List[Dict[str, Any]] = []
-    raw_ref = str(out_full)
-    with out_full.open("w", encoding="utf-8") as f_full:
-        for row, raw1, raw2 in zip(rows, stage1_raw, extractor_raw):
-            text1 = str(raw1)
-            text2 = strip_think(raw2)
-
-            allowed = sorted([k for k in row.get("_options_obj", {}).keys() if isinstance(k, str)])
-            row_mode = row.get("_answer_mode", "option")
-            pred_stage1_direct = parse_prediction_from_text(text1, row_mode, allowed)
-            pred_extracted = parse_prediction_from_text(text2, row_mode, allowed)
-            flags = analyze_extraction(row, pred_stage1_direct, pred_extracted)
-
-            full_rec = {k: v for k, v in row.items() if not k.startswith("_")}
-            full_rec["answer_mode"] = row_mode
-            full_rec["expected_answer_count"] = row.get("_answer_count_int", 1)
-            full_rec["prediction_stage1_direct"] = pred_stage1_direct
-            full_rec["prediction"] = pred_extracted
-            full_rec["extractor_output"] = text2
-            for k, v in flags.items():
-                full_rec[k] = v
-            f_full.write(json.dumps(full_rec, ensure_ascii=False) + "\n")
-
-            light_records.append(
-                make_light_record(
-                    row=row,
-                    prediction=pred_extracted,
-                    raw_output_file=raw_ref,
-                    stage1_direct=pred_stage1_direct,
-                    extraction_flags=flags,
-                )
-            )
-
-    fieldnames = list(light_records[0].keys()) if light_records else []
-    with out_light.open("w", encoding="utf-8", newline="") as f_light:
-        writer = csv.DictWriter(f_light, fieldnames=fieldnames)
-        if fieldnames:
-            writer.writeheader()
-            writer.writerows(light_records)
-    print(f"DONE_EXTRACT full={out_full} light={out_light} rows={len(light_records)}")
+    print(f"DONE_EXTRACT_ALL jobs={len(jobs)} ok={n_ok} failed={n_failed}")
+    if n_failed > 0:
+        raise SystemExit(1)
 
 
 if __name__ == "__main__":

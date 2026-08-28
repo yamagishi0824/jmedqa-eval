@@ -153,6 +153,11 @@ bash scripts/run_eval_jmedqa_extract_llm.sh
 抽出LLMには問題文や正答を渡しません。Light CSVには未抽出・解答数不一致などの
 診断列も保存されます。
 
+抽出段は、未処理のstage1出力をまず全て集め、1プロセスでまとめて処理します。
+そのため抽出モデルのロードは評価モデルごとではなく実行ごとに1回だけです。
+`jmedqa_pred_full.jsonl` と `jmedqa_pred_light.csv` が揃っているディレクトリは
+対象外になり、対象が0件なら抽出モデルはロードされません。
+
 出力:
 
 - `outputs_jmedqa_extract_llm_question_variants/{model}_{temp[_think]}/jmedqa_pred_full.jsonl`

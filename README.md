@@ -150,6 +150,12 @@ LLM reads *only* that output and extracts the final answer. The question and the
 gold answer are never passed to the extractor. The light CSV also records
 extraction diagnostics such as parse failures and answer-count mismatches.
 
+The extraction stage collects every pending stage1 output first and processes
+them in one process, so the extractor model is loaded once per run instead of
+once per evaluated model. Directories that already hold both
+`jmedqa_pred_full.jsonl` and `jmedqa_pred_light.csv` are skipped; if nothing is
+pending, the extractor model is not loaded at all.
+
 Outputs:
 
 - `outputs_jmedqa_extract_llm_question_variants/{model}_{temp[_think]}/jmedqa_pred_full.jsonl`

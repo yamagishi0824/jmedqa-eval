@@ -247,19 +247,23 @@ set -e
 echo ""
 echo "========================================"
 echo "[Step 2] answer extraction (extractor LLM)"
+echo "  the extractor model is loaded once for all pending outputs"
 echo "========================================"
 
-set +e
+# Collect the pending extraction targets first, then invoke Python once so the
+# extractor model is loaded a single time instead of once per evaluated model.
+# Job file format, one line per target:
+#   stage1_full_in <TAB> out_full <TAB> out_light
+EXTRACT_JOBS_FILE="$(mktemp "${TMPDIR:-/tmp}/jmedqa_extract_jobs.XXXXXX")"
+trap 'rm -f "$EXTRACT_JOBS_FILE"' EXIT
+
+EXTRACT_JOB_COUNT=0
+
 for MODEL_DEF in "${MODELS[@]}"; do
   IFS='|' read -r MODEL_NAME MODEL_PATH MAX_MODEL_LEN SYS_PRESET TRUST_REMOTE_CODE ENABLE_THINKING <<< "$MODEL_DEF"
 
-  TRUST_FLAG=""
-  [[ "$TRUST_REMOTE_CODE" == "true" ]] && TRUST_FLAG="--trust-remote-code"
-
-  THINKING_FLAG="--disable-thinking"
   THINK_SUFFIX=""
   if [[ "$ENABLE_THINKING" == "true" ]]; then
-    THINKING_FLAG="--enable-thinking"
     THINK_SUFFIX="_think"
   fi
 
@@ -281,37 +285,41 @@ for MODEL_DEF in "${MODELS[@]}"; do
       continue
     fi
 
-    echo "[RUN] extract model=${MODEL_NAME} temp=${TEMPERATURE} extractor=${EXTRACTOR_MODEL} outdir=${OUTDIR}"
-
-    "${UV_CMD}" run python src/infer_jmedqa_extract_llm.py \
-      --mode                     "extract"               \
-      --model                    "$MODEL_PATH"           \
-      --extractor-model          "$EXTRACTOR_MODEL"      \
-      --input-csv                "$INPUT_CSV"            \
-      --stage1-full-in           "$STAGE1_FULL_FILE"     \
-      --out-full                 "$FULL_FILE"            \
-      --out-light                "$LIGHT_FILE"           \
-      --tp                       "$TP"                   \
-      --extractor-tp             "$EXTRACTOR_TP"         \
-      --max-len                  "$MAX_MODEL_LEN"        \
-      --extractor-max-len        "$EXTRACTOR_MAX_LEN"    \
-      --max-tokens               "$MAX_TOKENS"           \
-      --extractor-max-tokens     "$EXTRACTOR_MAX_TOKENS" \
-      --temperature              "$TEMPERATURE"          \
-      --extractor-temperature    0.0                     \
-      --extractor-top-p          1.0                     \
-      --system-prompt-preset     "$SYS_PRESET"           \
-      --keep-think               \
-      $THINKING_FLAG             \
-      $TRUST_FLAG
-
-    RC=$?
-    if [[ $RC -ne 0 ]]; then
-      echo "[WARN] extract FAILED: model=${MODEL_NAME} temp=${TEMPERATURE} thinking=${ENABLE_THINKING} (rc=${RC})"
-    fi
+    printf '%s\t%s\t%s\n' "$STAGE1_FULL_FILE" "$FULL_FILE" "$LIGHT_FILE" >> "$EXTRACT_JOBS_FILE"
+    EXTRACT_JOB_COUNT=$((EXTRACT_JOB_COUNT + 1))
+    echo "[QUEUE] extract model=${MODEL_NAME} temp=${TEMPERATURE} thinking=${ENABLE_THINKING} outdir=${OUTDIR}"
   done
 done
-set -e
+
+if [[ "$EXTRACT_JOB_COUNT" -eq 0 ]]; then
+  echo "[SKIP] nothing to extract (the extractor model is not loaded)"
+else
+  echo "[RUN] extract targets=${EXTRACT_JOB_COUNT} extractor=${EXTRACTOR_MODEL}"
+
+  set +e
+  # --model and --input-csv are unused in extract mode but kept for the CLI contract.
+  "${UV_CMD}" run python src/infer_jmedqa_extract_llm.py \
+    --mode                     "extract"               \
+    --model                    "$EXTRACTOR_MODEL"      \
+    --extractor-model          "$EXTRACTOR_MODEL"      \
+    --input-csv                "$INPUT_CSV"            \
+    --jobs-file                "$EXTRACT_JOBS_FILE"    \
+    --extractor-tp             "$EXTRACTOR_TP"         \
+    --extractor-max-len        "$EXTRACTOR_MAX_LEN"    \
+    --extractor-max-tokens     "$EXTRACTOR_MAX_TOKENS" \
+    --extractor-temperature    0.0                     \
+    --extractor-top-p          1.0                     \
+    --trust-remote-code
+
+  RC=$?
+  set -e
+  if [[ $RC -ne 0 ]]; then
+    echo "[WARN] extraction batch FAILED (rc=${RC}) — see FAILED_EXTRACT lines for per-target errors"
+  fi
+fi
+
+rm -f "$EXTRACT_JOBS_FILE"
+trap - EXIT
 
 echo ""
 echo "========================================"
