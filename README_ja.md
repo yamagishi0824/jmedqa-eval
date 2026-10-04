@@ -253,20 +253,25 @@ a. ...
 | llm-jp-3.1-13b-instruct4 | Japanese | greedy | 0.495 | 0.530 | – | – |
 | gemma-3-4b-it | General | official | 0.430 | 0.500 | 0.426 | 0.482 |
 
-#### reasoning effort 違い（既定の effort は主な回の表）
+#### reasoning effort（low / medium / high）
 
-| Model | Category | Sampling | All (3,581) | 2026 (400) | With images: all | With images: 2026 |
-|---|---|---|---|---|---|---|
-| gpt-oss-120b-effort-high | General | official | 0.904 | 0.930 | – | – |
-| llm-jp-4-33b-thinking-effort-high | Japanese | greedy | 0.861 | 0.885 | – | – |
-| gpt-oss-120b-effort-low | General | official | 0.852 | 0.905 | – | – |
-| gpt-oss-20b-effort-high | General | official | 0.848 | 0.860 | – | – |
-| llm-jp-4-32b-a3b-thinking-effort-high | Japanese | greedy | 0.816 | 0.828 | – | – |
-| llm-jp-4-33b-thinking-effort-low | Japanese | greedy | 0.797 | 0.838 | – | – |
-| llm-jp-4-8b-thinking-effort-high | Japanese | greedy | 0.783 | 0.797 | – | – |
-| llm-jp-4-32b-a3b-thinking-effort-low | Japanese | greedy | 0.763 | 0.815 | – | – |
-| gpt-oss-20b-effort-low | General | official | 0.735 | 0.750 | – | – |
-| llm-jp-4-8b-thinking-effort-low | Japanese | greedy | 0.729 | 0.767 | – | – |
+| Model | Effort | Sampling | All (3,581) | 2026 (400) | 推論トークン（中央値） |
+|---|---|---|---|---|---|
+| gpt-oss-120b | low | official | 0.852 | 0.905 | 66 |
+| gpt-oss-120b | medium (default) | official | 0.886 | 0.910 | 316 |
+| gpt-oss-120b | high | official | 0.904 | 0.930 | 1148 |
+| llm-jp-4-33b-thinking | low | greedy | 0.797 | 0.838 | 276 |
+| llm-jp-4-33b-thinking | medium (default) | greedy | 0.855 | 0.880 | 1154 |
+| llm-jp-4-33b-thinking | high | greedy | 0.861 | 0.885 | 3610 |
+| gpt-oss-20b | low | official | 0.735 | 0.750 | 69 |
+| gpt-oss-20b | medium (default) | official | 0.822 | 0.835 | 473 |
+| gpt-oss-20b | high | official | 0.848 | 0.860 | 1585 |
+| llm-jp-4-32b-a3b-thinking | low | greedy | 0.763 | 0.815 | 61 |
+| llm-jp-4-32b-a3b-thinking | medium (default) | greedy | 0.814 | 0.835 | 293 |
+| llm-jp-4-32b-a3b-thinking | high | greedy | 0.816 | 0.828 | 977 |
+| llm-jp-4-8b-thinking | low | greedy | 0.729 | 0.767 | 64 |
+| llm-jp-4-8b-thinking | medium (default) | greedy | 0.784 | 0.805 | 306 |
+| llm-jp-4-8b-thinking | high | greedy | 0.783 | 0.797 | 1118 |
 
 #### 推奨値で評価したモデルの greedy の回（greedy のモデルと比べる用）
 

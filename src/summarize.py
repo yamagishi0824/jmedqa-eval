@@ -65,7 +65,25 @@ def markdown_tables(summary: List[Dict]) -> str:
     t0 = [s for s in summary if "t0cmp" in groups(s)]
     md = "#### Main runs\n\n" + head + "".join(row(s) for s in main)
     if effort:
-        md += "\n#### Reasoning-effort variants (default effort: see the main table)\n\n" + head + "".join(row(s) for s in effort)
+        # reasoning effort low / medium (default) / high side by side; the default-effort run comes from the main table
+        by_name = {s["model"]: s for s in main}
+        bases = []
+        for s in effort:
+            base = s["model"].rsplit("-effort-", 1)[0]
+            if base not in bases:
+                bases.append(base)
+        order = {"low": 0, "medium (default)": 1, "high": 2}
+        lines = []
+        for base in bases:
+            runs = [(s["model"].rsplit("-effort-", 1)[1], s) for s in effort if s["model"].rsplit("-effort-", 1)[0] == base]
+            if base in by_name:
+                runs.append(("medium (default)", by_name[base]))
+            for eff, s in sorted(runs, key=lambda x: order.get(x[0], 9)):
+                lines.append(f"| {base} | {eff} | {s['sampling']} | {_f(s['acc_original'])} | {_f(s['acc_original_2026'])} | "
+                             f"{s['reasoning_tokens_median']} |\n")
+        md += ("\n#### Reasoning effort\n\n"
+               "| Model | Effort | Sampling | All (3,581) | 2026 (400) | Median reasoning tokens |\n"
+               "|---|---|---|---|---|---|\n" + "".join(lines))
     if t0:
         md += "\n#### Greedy runs of sampled models (for comparisons with greedy-only models)\n\n" + head + "".join(row(s) for s in t0)
     return md
