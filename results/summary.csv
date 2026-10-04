@@ -15,6 +15,7 @@ GPT-OSS-Swallow-120B-RL-v0.1,GPT-OSS-Swallow-120B-RL-v0.1,think,Japanese,Japanes
 Qwen3-235B-A22B-Instruct-2507,Qwen3-235B-A22B-Instruct-2507,nothink,General,General,Qwen3,official,3581,0.9134,0.907,,1.0,1.0,0,0,445,235.1,22,0.92,,"v1,qwen"
 Llama-4-Maverick-17B-128E-Instruct,Llama-4-Maverick-17B-128E-Instruct,nothink,General,General,Llama,official,3581,0.9109,0.907,,0.9841,1.0,0,0,528,402,17,0.915,,"v1,llama"
 Weblab-MedLLM-gpt-oss-120b,Weblab-MedLLM-gpt-oss-120b,think,Medical,Medical (NEDO),gpt-oss,greedy,3581,0.9106,0.9031,,0.9911,0.9997,1,438,182,116.8,5.1,0.935,,nedo
+sip-jmed-llm-4-33b-dev-1005,sip-jmed-llm-4-33b-dev-1005,think,Medical,Medical (SIP),llm-jp-4,greedy,3581,0.9067,0.9014,,0.9738,0.9941,1,327,65,33.2,33.2,0.93,,sip
 gpt-oss-120b-effort-high,gpt-oss-120b,think,General,General,gpt-oss,official,3581,0.9042,0.8964,,0.9927,0.9989,0,1148,109,116.8,5.1,0.93,,"effort,gptoss"
 Medical-GPT-OSS-Swallow-120B,Medical-GPT-OSS-Swallow-120B,think,Medical,Medical (NEDO),gpt-oss,official,3581,0.902,0.8908,,0.9969,0.9978,0,334,107,116.8,5.1,0.92,,nedo
 GPT-OSS-Swallow-120B-SFT-v0.1,GPT-OSS-Swallow-120B-SFT-v0.1,think,Japanese,Japanese,gpt-oss,official,3581,0.9011,0.8903,,0.9953,0.9983,0,248,63,116.8,5.1,0.9425,,"v1,swallow"

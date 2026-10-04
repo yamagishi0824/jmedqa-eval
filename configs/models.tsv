@@ -3,7 +3,7 @@
 #
 # Columns (tab-separated, "-" = empty):
 #   name      run name (prefix of the output directory; variants such as reasoning effort get their own name)
-#   model     Hugging Face repo id or a local checkpoint directory
+#   model     Hugging Face repo id or a local checkpoint directory ("-" = weights not public; results only)
 #   profile   key in src/model_profiles.py      mode  think / nothink      tp  tensor-parallel size
 #   sampling  auto (official values if the profile marks them as recommended, otherwise greedy) / greedy / official
 #   kwargs    JSON merged into chat_template_kwargs (e.g. {"reasoning_effort":"high"})
@@ -90,6 +90,8 @@ Weblab-MedLLM-gpt-oss-120b	weblab-LLM-M/Weblab-MedLLM-gpt-oss-120b	weblab_gptoss
 Weblab-MedLLM-GLM-4.7	weblab-LLM-M/Weblab-MedLLM-GLM-4.7	weblab_glm47	think	8	auto	-	0	nedo	Medical	Medical (NEDO)	GLM	355	32
 medgemma-27b-it	google/medgemma-27b-it	medgemma	think	8	auto	-	1	core,gemma	Medical	Medical (MedGemma)	Gemma 3	28.8	28.8
 SIP-jmed-llm-3-8x13b-OP-32k-R0.1	SIP-med-LLM/SIP-jmed-llm-3-8x13b-OP-32k-R0.1	sipjmed3	nothink	8	auto	-	0	core,sip	Medical	Medical (SIP)	SIP-jmed-3	73.2	22
+# sip-jmed-llm-4-33b-dev-1005: development checkpoint of SIP-jmed-llm-4 (weights not public; results only, skipped by run_eval.sh)
+sip-jmed-llm-4-33b-dev-1005	-	llmjp4	think	8	greedy	-	0	sip	Medical	Medical (SIP)	llm-jp-4	33.2	33.2
 SIP-jmed-llm-3-8x13b-AC-32k-instruct	SIP-med-LLM/SIP-jmed-llm-3-8x13b-AC-32k-instruct	sipjmed3	nothink	8	auto	-	0	core,sip	Medical	Medical (SIP)	SIP-jmed-3	73.2	22
 SIP-jmed-llm-3-13b-OP-32k-R0.1	SIP-med-LLM/SIP-jmed-llm-3-13b-OP-32k-R0.1	sipjmed3	nothink	8	auto	-	0	v1,sip	Medical	Medical (SIP)	SIP-jmed-3	13.7	13.7
 SIP-jmed-llm-2-8x13b-OP-instruct	SIP-med-LLM/SIP-jmed-llm-2-8x13b-OP-instruct	sipjmed2	nothink	8	auto	-	0	v1,sip	Medical	Medical (SIP)	SIP-jmed-2	73.2	22

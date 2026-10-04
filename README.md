@@ -195,6 +195,7 @@ more models are evaluated; full statistics are in [`results/`](results/) (VLMs b
 
 - **All**: the 3,581 questions; **2026**: the 400 questions of the 2026 exam.
 - **With images**: VLMs only; the image-referencing questions are answered with their images (– = not evaluated with images, mostly models without an image encoder).
+- **sip-jmed-llm-4-33b-dev-1005**: a development checkpoint of SIP-jmed-llm-4 (weights not public).
 - **(think) / (no think)**: the original Qwen3 releases (hybrid thinking) are evaluated with thinking on and off.
 - **Sampling**: `official` = the card's recommended values, `greedy` = temperature 0 (no recommendation in the card).
 
@@ -217,6 +218,7 @@ more models are evaluated; full statistics are in [`results/`](results/) (VLMs b
 | Qwen3-235B-A22B-Instruct-2507 | General | official | 0.913 | 0.920 | – | – |
 | Llama-4-Maverick-17B-128E-Instruct | General | official | 0.911 | 0.915 | – | – |
 | Weblab-MedLLM-gpt-oss-120b | Medical (NEDO) | greedy | 0.911 | 0.935 | – | – |
+| sip-jmed-llm-4-33b-dev-1005 | Medical (SIP) | greedy | 0.907 | 0.930 | – | – |
 | Medical-GPT-OSS-Swallow-120B | Medical (NEDO) | official | 0.902 | 0.920 | – | – |
 | GPT-OSS-Swallow-120B-SFT-v0.1 | Japanese | official | 0.901 | 0.943 | – | – |
 | gemma-4-12B-it | General | official | 0.886 | 0.882 | 0.896 | 0.885 |

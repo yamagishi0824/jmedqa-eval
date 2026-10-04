@@ -88,6 +88,8 @@ def main() -> None:
     rows = select(load(), a.only or None, a.group or None, a.sampling or None, a.images)
     for r in rows:
         od = r["outdir_vision"] if a.images else r["outdir"]
+        if a.cmd == "plan" and not r["model"]:
+            continue  # results-only row (weights not public)
         if a.cmd == "plan":
             print("\t".join([r["name"], r["model"], r["profile"], r["mode"], r["tp"], r["sampling"], od, r["kwargs"] or "-"]))
         else:

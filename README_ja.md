@@ -189,6 +189,7 @@ a. ...
 
 - **All**: 3,581 問、**2026**: 2026 年の 400 問。
 - **With images**: VLM のみ。画像参照のある問題を画像付きで解かせた結果です（– は画像ありでは評価していない回。主に画像エンコーダの無いモデル）。
+- **sip-jmed-llm-4-33b-dev-1005**: SIP-jmed-llm-4 の開発中のチェックポイント（重みは非公開）。
 - **(think) / (no think)**: thinking を切り替えられる無印の Qwen3 は、thinking のオンとオフの両方で評価しています。
 - **Sampling**: `official` = model card の推奨値、`greedy` = temperature 0（model card に推奨が無いモデル）。
 
@@ -211,6 +212,7 @@ a. ...
 | Qwen3-235B-A22B-Instruct-2507 | General | official | 0.913 | 0.920 | – | – |
 | Llama-4-Maverick-17B-128E-Instruct | General | official | 0.911 | 0.915 | – | – |
 | Weblab-MedLLM-gpt-oss-120b | Medical (NEDO) | greedy | 0.911 | 0.935 | – | – |
+| sip-jmed-llm-4-33b-dev-1005 | Medical (SIP) | greedy | 0.907 | 0.930 | – | – |
 | Medical-GPT-OSS-Swallow-120B | Medical (NEDO) | official | 0.902 | 0.920 | – | – |
 | GPT-OSS-Swallow-120B-SFT-v0.1 | Japanese | official | 0.901 | 0.943 | – | – |
 | gemma-4-12B-it | General | official | 0.886 | 0.882 | 0.896 | 0.885 |
