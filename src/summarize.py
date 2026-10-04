@@ -49,12 +49,18 @@ def _acc(values) -> float:
     return sum(values) / len(values) if values else float("nan")
 
 
-def display_name(r: Dict) -> str:
-    """Model name as published plus the evaluated mode, e.g. "Qwen3-32B (no think)".
-    Run-name suffixes added in the registry (-nothink, -effort-*) are dropped; the effort table shows the effort."""
-    base = r["name"].rsplit("-effort-", 1)[0]
-    base = base[: -len("-nothink")] if base.endswith("-nothink") else base
-    return f"{base} ({'think' if r['mode'] == 'think' else 'no think'})"
+def _base_name(name: str) -> str:
+    """Model name as published: drop run-name suffixes added in the registry (-nothink, -effort-*)."""
+    base = name.rsplit("-effort-", 1)[0]
+    return base[: -len("-nothink")] if base.endswith("-nothink") else base
+
+
+def display_name(r: Dict, both_modes: set) -> str:
+    """Published model name; models evaluated in both modes (hybrid-thinking Qwen3) get "(think)" / "(no think)"."""
+    base = _base_name(r["name"])
+    if base in both_modes:
+        return f"{base} ({'think' if r['mode'] == 'think' else 'no think'})"
+    return base
 
 
 def _f(x, missing: str = "") -> str:
@@ -105,7 +111,12 @@ def main() -> None:
     out.mkdir(parents=True, exist_ok=True)
 
     summary, by_year, by_dep = [], [], []
-    for r in load():
+    rows_all = load()
+    modes = {}
+    for r in rows_all:
+        modes.setdefault(_base_name(r["name"]), set()).add(r["mode"])
+    both_modes = {b for b, m in modes.items() if len(m) > 1}
+    for r in rows_all:
         res = _correct(ROOT / r["outdir"])
         if res is None:
             continue
@@ -123,7 +134,7 @@ def main() -> None:
         o_rows = list(meta.values())
         tok = lambda col: st.median(int(x[col]) for x in o_rows) if o_rows and o_rows[0].get(col, "") != "" else ""
         summary.append({
-            "model": r["name"], "display_name": display_name(r), "mode": r["mode"], "category": r["category"], "subgroup": r["subgroup"], "family": r["family"],
+            "model": r["name"], "display_name": display_name(r, both_modes), "mode": r["mode"], "category": r["category"], "subgroup": r["subgroup"], "family": r["family"],
             "sampling": r["sampling"], "n_questions": len(orig),
             "acc_original": round(_acc(orig.values()), 4), "acc_no_image": round(_acc(noimg.values()), 4),
             "acc_image": round(_acc(img.values()), 4) if img else "",
