@@ -49,6 +49,14 @@ def _acc(values) -> float:
     return sum(values) / len(values) if values else float("nan")
 
 
+def display_name(r: Dict) -> str:
+    """Model name as published plus the evaluated mode, e.g. "Qwen3-32B (no think)".
+    Run-name suffixes added in the registry (-nothink, -effort-*) are dropped; the effort table shows the effort."""
+    base = r["name"].rsplit("-effort-", 1)[0]
+    base = base[: -len("-nothink")] if base.endswith("-nothink") else base
+    return f"{base} ({'think' if r['mode'] == 'think' else 'no think'})"
+
+
 def _f(x, missing: str = "") -> str:
     return missing if x == "" else f"{x:.3f}"
 
@@ -57,7 +65,7 @@ def markdown_tables(summary: List[Dict]) -> str:
     """README tables: main runs, reasoning-effort variants, and greedy comparison runs."""
     head = ("| Model | Category | Sampling | All (3,581) | 2026 (400) | With images: all | With images: 2026 |\n"
             "|---|---|---|---|---|---|---|\n")
-    row = lambda s: (f"| {s['model']} | {s['subgroup'] or s['category']} | {s['sampling']} | {_f(s['acc_original'])} | "
+    row = lambda s: (f"| {s['display_name']} | {s['subgroup'] or s['category']} | {s['sampling']} | {_f(s['acc_original'])} | "
                      f"{_f(s['acc_original_2026'])} | {_f(s['acc_image'], '–')} | {_f(s['acc_image_2026'], '–')} |\n")
     groups = lambda s: s["groups"].split(",")
     main = [s for s in summary if "effort" not in groups(s) and "t0cmp" not in groups(s)]
@@ -79,7 +87,7 @@ def markdown_tables(summary: List[Dict]) -> str:
             if base in by_name:
                 runs.append(("medium (default)", by_name[base]))
             for eff, s in sorted(runs, key=lambda x: order.get(x[0], 9)):
-                lines.append(f"| {base} | {eff} | {s['sampling']} | {_f(s['acc_original'])} | {_f(s['acc_original_2026'])} | "
+                lines.append(f"| {s['display_name']} | {eff} | {s['sampling']} | {_f(s['acc_original'])} | {_f(s['acc_original_2026'])} | "
                              f"{s['reasoning_tokens_median']} |\n")
         md += ("\n#### Reasoning effort\n\n"
                "| Model | Effort | Sampling | All (3,581) | 2026 (400) | Median reasoning tokens |\n"
@@ -115,7 +123,7 @@ def main() -> None:
         o_rows = list(meta.values())
         tok = lambda col: st.median(int(x[col]) for x in o_rows) if o_rows and o_rows[0].get(col, "") != "" else ""
         summary.append({
-            "model": r["name"], "category": r["category"], "subgroup": r["subgroup"], "family": r["family"],
+            "model": r["name"], "display_name": display_name(r), "mode": r["mode"], "category": r["category"], "subgroup": r["subgroup"], "family": r["family"],
             "sampling": r["sampling"], "n_questions": len(orig),
             "acc_original": round(_acc(orig.values()), 4), "acc_no_image": round(_acc(noimg.values()), 4),
             "acc_image": round(_acc(img.values()), 4) if img else "",

@@ -1,72 +1,72 @@
-﻿model,category,subgroup,family,sampling,n_questions,acc_original,acc_no_image,acc_image,answer_line_rate,extraction_success,truncated,reasoning_tokens_median,content_tokens_median,total_params_B,active_params_B,acc_original_2026,acc_image_2026,groups
-DeepSeek-V4-Flash-0731,General,General,DeepSeek,official,3581,0.9517,0.9509,,0.9997,0.9997,0,370,47,284,13,0.9475,,"core,deepseek"
-DeepSeek-V4.1-Flash,General,General,DeepSeek,official,3581,0.9509,0.9475,0.9584,1.0,1.0,0,249,74,552,16,0.96,0.97,"core,deepseek"
-Qwen3.8-Flash-Next,General,General,Qwen3.8,official,3581,0.9469,0.9469,0.9592,1.0,1.0,0,545,107,180,6,0.945,0.9525,"core,qwen"
-gemma-4-31B-it,General,General,Gemma 4,official,3581,0.945,0.9422,0.9545,1.0,1.0,0,800,356,31.3,31.3,0.965,0.96,"core,gemma"
-GLM-4.7,General,General,GLM,official,3581,0.9402,0.938,,0.9992,0.9992,0,1437,389,355,32,0.9475,,
-DeepSeek-V3.2,General,General,DeepSeek,official,3581,0.9374,0.9316,,0.9994,1.0,0,642,96,671,37,0.955,,"core,deepseek"
-gemma-4-26B-A4B-it,General,General,Gemma 4,official,3581,0.9366,0.9333,0.9486,0.9997,0.9997,1,1470,383,25.8,3.8,0.95,0.95,"core,gemma"
-Qwen3-235B-A22B-Thinking-2507,General,General,Qwen3,official,3581,0.9243,0.9226,,1.0,1.0,0,913,314,235.1,22,0.93,,"core,qwen,baseline"
-Qwen3.8-27B,General,General,Qwen3.8,official,3581,0.924,0.9207,0.9363,0.9992,0.9992,3,714,120,27.8,27.8,0.925,0.95,"core,qwen"
-Weblab-MedLLM-Qwen3-235B-Thinking,Medical,Medical (NEDO),Qwen3,greedy,3581,0.9238,0.9213,,1.0,1.0,0,906,336,235.1,22,0.935,,nedo
-Weblab-MedLLM-GLM-4.7,Medical,Medical (NEDO),GLM,greedy,3581,0.9238,0.9213,,0.9908,0.9911,27,1036,291,355,32,0.9325,,nedo
-Qwen3-235B-A22B-Thinking-2507,General,General,Qwen3,greedy,3581,0.9221,0.9173,,1.0,1.0,0,884,313,235.1,22,0.93,,t0cmp
-GPT-OSS-Swallow-120B-RL-v0.1,Japanese,Japanese,gpt-oss,official,3581,0.9148,0.9067,,0.9983,0.9983,1,483,177,116.8,5.1,0.9525,,"baseline,swallow"
-Qwen3-235B-A22B-Instruct-2507,General,General,Qwen3,official,3581,0.9134,0.907,,1.0,1.0,0,0,445,235.1,22,0.92,,"v1,qwen"
-Llama-4-Maverick-17B-128E-Instruct,General,General,Llama,official,3581,0.9109,0.907,,0.9841,1.0,0,0,528,402,17,0.915,,"v1,llama"
-Weblab-MedLLM-gpt-oss-120b,Medical,Medical (NEDO),gpt-oss,greedy,3581,0.9106,0.9031,,0.9911,0.9997,1,438,182,116.8,5.1,0.935,,nedo
-gpt-oss-120b-effort-high,General,General,gpt-oss,official,3581,0.9042,0.8964,,0.9927,0.9989,0,1148,109,116.8,5.1,0.93,,"effort,gptoss"
-Medical-GPT-OSS-Swallow-120B,Medical,Medical (NEDO),gpt-oss,official,3581,0.902,0.8908,,0.9969,0.9978,0,334,107,116.8,5.1,0.92,,nedo
-GPT-OSS-Swallow-120B-SFT-v0.1,Japanese,Japanese,gpt-oss,official,3581,0.9011,0.8903,,0.9953,0.9983,0,248,63,116.8,5.1,0.9425,,"v1,swallow"
-gpt-oss-120b,General,General,gpt-oss,greedy,3581,0.8922,0.8863,,0.9712,0.9989,0,291,81,116.8,5.1,0.895,,t0cmp
-gemma-4-12B-it,General,General,Gemma 4,official,3581,0.8861,0.8875,0.8956,0.9992,0.9992,3,1514,368,12.0,12.0,0.8825,0.885,"core,gemma"
-gpt-oss-120b,General,General,gpt-oss,official,3581,0.8858,0.8813,,0.9821,0.9989,0,316,85,116.8,5.1,0.91,,"baseline,compare,gptoss"
-Medical-Qwen3-Swallow-30B-A3B,Medical,Medical (NEDO),Qwen3,official,3581,0.8813,0.8769,,0.9891,0.9975,3,233,5,30.5,3.3,0.9075,,nedo
-Qwen3-Swallow-32B-RL-v0.2,Japanese,Japanese,Qwen3,official,3581,0.881,0.8769,,0.9961,0.9978,1,401,155,32.8,32.8,0.8825,,"baseline,swallow"
-Qwen3-30B-A3B-Thinking-2507,General,General,Qwen3,official,3581,0.8757,0.8718,,1.0,1.0,0,1069,300,30.5,3.3,0.8725,,"compare,v1,qwen"
-Qwen3-Swallow-30B-A3B-RL-v0.2,Japanese,Japanese,Qwen3,official,3581,0.8715,0.8685,,0.9969,0.9986,4,464,131,30.5,3.3,0.905,,"baseline,swallow"
-GPT-OSS-Swallow-20B-RL-v0.1,Japanese,Japanese,gpt-oss,official,3581,0.8674,0.8643,,0.9897,0.9916,30,657,118,20.9,3.6,0.8875,,"v1,swallow"
-Qwen3-Swallow-32B-SFT-v0.2,Japanese,Japanese,Qwen3,official,3581,0.866,0.8665,,0.9966,0.9992,0,233,32,32.8,32.8,0.875,,"v1,swallow"
-llm-jp-4-33b-thinking-effort-high,Japanese,Japanese,llm-jp-4,greedy,3581,0.8609,0.8534,,0.9849,0.9886,25,3610,339,33.2,33.2,0.885,,"effort,llmjp"
-Llama-4-Scout-17B-16E-Instruct,General,General,Llama,official,3581,0.8598,0.857,,0.9629,1.0,0,0,458,109,17,0.8825,,"v1,llama"
-Qwen3-32B,General,General,Qwen3,official,3581,0.8556,0.8517,,0.9983,0.9986,5,595,3,32.8,32.8,0.88,,"baseline,compare,qwen"
-llm-jp-4-33b-thinking,Japanese,Japanese,llm-jp-4,greedy,3581,0.8551,0.847,,0.998,0.998,2,1154,206,33.2,33.2,0.88,,"core,llmjp"
-gpt-oss-120b-effort-low,General,General,gpt-oss,official,3581,0.852,0.8431,,0.9805,0.9975,0,66,85,116.8,5.1,0.905,,"effort,gptoss"
-Qwen3-Swallow-30B-A3B-SFT-v0.2,Japanese,Japanese,Qwen3,official,3581,0.8481,0.8442,,0.971,0.9983,2,239,5,30.5,3.3,0.8725,,"v1,swallow"
-gpt-oss-20b-effort-high,General,General,gpt-oss,official,3581,0.8478,0.8358,,0.9777,0.9961,0,1585,49,20.9,3.6,0.86,,"effort,gptoss"
-GPT-OSS-Swallow-20B-SFT-v0.1,Japanese,Japanese,gpt-oss,official,3581,0.8456,0.8378,,0.9698,0.9997,0,241,40,20.9,3.6,0.875,,"v1,swallow"
-Qwen3-30B-A3B,General,General,Qwen3,official,3581,0.8442,0.845,,1.0,1.0,0,812,3,30.5,3.3,0.8425,,"baseline,compare,qwen"
-Qwen3-30B-A3B-Instruct-2507,General,General,Qwen3,official,3581,0.8414,0.8405,,0.9961,0.9989,13,0,529,30.5,3.3,0.8725,,"compare,v1,qwen"
-gpt-oss-20b,General,General,gpt-oss,official,3581,0.8216,0.8176,,0.95,0.9958,0,473,64,20.9,3.6,0.835,,"compare,v1,gptoss"
-llm-jp-4-32b-a3b-thinking-effort-high,Japanese,Japanese,llm-jp-4,greedy,3581,0.816,0.8112,,0.9601,0.9763,76,977,157,32,3,0.8275,,"effort,llmjp"
-Qwen3-Swallow-8B-RL-v0.2,Japanese,Japanese,Qwen3,official,3581,0.8149,0.8112,,0.9922,0.9969,2,564,127,8.2,8.2,0.83,,"baseline,swallow"
-llm-jp-4-32b-a3b-thinking,Japanese,Japanese,llm-jp-4,greedy,3581,0.8137,0.8082,,0.9355,0.9992,0,293,5,32,3,0.835,,"compare,v1,llmjp"
-GLM-4.7-Flash,General,General,GLM,official,3581,0.8087,0.7964,,0.9916,0.9958,1,2024,372,31.2,3.0,0.83,,core
-Qwen3-32B-nothink,General,General,Qwen3,official,3581,0.8065,0.7967,,0.9866,0.9872,1,0,385,32.8,32.8,0.835,,"baseline_nothink,qwen"
-Medical-Qwen3-Swallow-32B,Medical,Medical (NEDO),Qwen3,official,3581,0.8006,0.7998,,0.9793,0.9799,59,0,262,32.8,32.8,0.8675,,nedo
-llm-jp-4-33b-thinking-effort-low,Japanese,Japanese,llm-jp-4,greedy,3581,0.7975,0.7948,,0.9961,0.9964,1,276,190,33.2,33.2,0.8375,,"effort,llmjp"
-medgemma-27b-it,Medical,Medical (MedGemma),Gemma 3,greedy,3581,0.7928,0.7922,0.792,0.9807,0.9852,69,0,615,28.8,28.8,0.81,0.8075,"core,gemma"
-Medical-Qwen3-Swallow-8B,Medical,Medical (NEDO),Qwen3,official,3581,0.7886,0.7822,,0.9291,0.9662,2,268,62,8.2,8.2,0.805,,nedo
-Qwen3-8B,General,General,Qwen3,official,3581,0.7869,0.7827,,0.9997,0.9997,1,1048,179,8.2,8.2,0.8125,,"baseline,qwen"
-llm-jp-4-8b-thinking,Japanese,Japanese,llm-jp-4,greedy,3581,0.7836,0.7844,,0.9986,0.9992,2,306,49,8,8,0.805,,"v1,llmjp"
-llm-jp-4-8b-thinking-effort-high,Japanese,Japanese,llm-jp-4,greedy,3581,0.7827,0.7791,,0.9668,0.967,115,1118,77,8,8,0.7975,,"effort,llmjp"
-Llama-3.3-70B-Instruct,General,General,Llama,official,3581,0.7822,0.7797,,0.9983,0.9992,4,0,159,70.6,70.6,0.805,,"v1,llama"
-Qwen3-Swallow-8B-SFT-v0.2,Japanese,Japanese,Qwen3,official,3581,0.7819,0.7819,,0.9966,0.9978,1,256,67,8.2,8.2,0.795,,"v1,swallow"
-Qwen3-30B-A3B-nothink,General,General,Qwen3,official,3581,0.7788,0.7749,,0.986,0.9888,5,0,374,30.5,3.3,0.7975,,"baseline_nothink,compare,qwen"
-SIP-jmed-llm-3-8x13b-OP-32k-R0.1,Medical,Medical (SIP),SIP-jmed-3,greedy,3581,0.7788,0.7643,,0.5004,0.983,0,549,7,73.2,22,0.8225,,"core,sip"
-Qwen3-4B-Thinking-2507,General,General,Qwen3,official,3581,0.7758,0.7749,,0.9997,0.9997,1,2289,382,4.0,4.0,0.7625,,"v1,qwen"
-gemma-4-E4B-it,General,General,Gemma 4,official,3581,0.7688,0.7668,0.7727,0.9779,0.9894,0,891,420,8.0,4.5,0.7925,0.795,"core,gemma"
-llm-jp-4-32b-a3b-thinking-effort-low,Japanese,Japanese,llm-jp-4,greedy,3581,0.7632,0.7601,,0.8827,0.9983,1,61,3,32,3,0.815,,"effort,llmjp"
-gemma-3-27b-it,General,General,Gemma 3,greedy,3581,0.7442,0.7367,,0.998,0.998,2,0,285,27.4,27.4,0.7875,,t0cmp
-gemma-3-27b-it,General,General,Gemma 3,official,3581,0.7428,0.74,0.7484,0.9983,0.9983,0,0,287,27.4,27.4,0.79,0.79,"baseline,gemma"
-SIP-jmed-llm-3-8x13b-AC-32k-instruct,Medical,Medical (SIP),SIP-jmed-3,greedy,3581,0.7425,0.7397,,0.6297,0.9972,0,0,3,73.2,22,0.7825,,"core,sip"
-gpt-oss-20b-effort-low,General,General,gpt-oss,official,3581,0.7353,0.7308,,0.9693,0.9944,0,69,81,20.9,3.6,0.75,,"effort,gptoss"
-llm-jp-4-8b-thinking-effort-low,Japanese,Japanese,llm-jp-4,greedy,3581,0.7288,0.7233,,0.9975,0.9975,0,64,53,8,8,0.7675,,"effort,llmjp"
-Qwen3-4B-Instruct-2507,General,General,Qwen3,official,3581,0.6878,0.6836,,0.9944,0.9969,17,0,678,4.0,4.0,0.72,,"v1,qwen"
-gemma-3-12b-it,General,General,Gemma 3,official,3581,0.6769,0.6719,0.6744,0.9994,0.9997,0,0,274,12.2,12.2,0.725,0.7275,"baseline,gemma"
-Qwen3-8B-nothink,General,General,Qwen3,official,3581,0.6657,0.6649,,0.9897,0.9913,5,0,443,8.2,8.2,0.7075,,"baseline_nothink,qwen"
-llm-jp-4-8b-instruct,Japanese,Japanese,llm-jp-4,greedy,3581,0.6509,0.6521,,0.9916,0.9961,0,0,3,8,8,0.695,,"v1,llmjp"
-gemma-4-E2B-it,General,General,Gemma 4,official,3581,0.6345,0.6454,0.6386,0.9651,0.9916,1,855,225,5.1,2.3,0.685,0.6975,"core,gemma"
-llm-jp-3.1-8x13b-instruct4,Japanese,Japanese,SIP-jmed-3,greedy,3581,0.5945,0.5923,,0.3605,0.9966,2,0,1,73.2,22,0.63,,llmjp
-llm-jp-3.1-13b-instruct4,Japanese,Japanese,SIP-jmed-3,greedy,3581,0.4951,0.4982,,0.9732,0.9802,5,0,281,13.7,13.7,0.53,,"v1,llmjp"
-gemma-3-4b-it,General,General,Gemma 3,official,3581,0.4298,0.4278,0.4261,0.9961,0.9961,1,0,229,4.3,4.3,0.5,0.4825,"baseline,gemma"
+﻿model,display_name,mode,category,subgroup,family,sampling,n_questions,acc_original,acc_no_image,acc_image,answer_line_rate,extraction_success,truncated,reasoning_tokens_median,content_tokens_median,total_params_B,active_params_B,acc_original_2026,acc_image_2026,groups
+DeepSeek-V4-Flash-0731,DeepSeek-V4-Flash-0731 (think),think,General,General,DeepSeek,official,3581,0.9517,0.9509,,0.9997,0.9997,0,370,47,284,13,0.9475,,"core,deepseek"
+DeepSeek-V4.1-Flash,DeepSeek-V4.1-Flash (think),think,General,General,DeepSeek,official,3581,0.9509,0.9475,0.9584,1.0,1.0,0,249,74,552,16,0.96,0.97,"core,deepseek"
+Qwen3.8-Flash-Next,Qwen3.8-Flash-Next (think),think,General,General,Qwen3.8,official,3581,0.9469,0.9469,0.9592,1.0,1.0,0,545,107,180,6,0.945,0.9525,"core,qwen"
+gemma-4-31B-it,gemma-4-31B-it (think),think,General,General,Gemma 4,official,3581,0.945,0.9422,0.9545,1.0,1.0,0,800,356,31.3,31.3,0.965,0.96,"core,gemma"
+GLM-4.7,GLM-4.7 (think),think,General,General,GLM,official,3581,0.9402,0.938,,0.9992,0.9992,0,1437,389,355,32,0.9475,,
+DeepSeek-V3.2,DeepSeek-V3.2 (think),think,General,General,DeepSeek,official,3581,0.9374,0.9316,,0.9994,1.0,0,642,96,671,37,0.955,,"core,deepseek"
+gemma-4-26B-A4B-it,gemma-4-26B-A4B-it (think),think,General,General,Gemma 4,official,3581,0.9366,0.9333,0.9486,0.9997,0.9997,1,1470,383,25.8,3.8,0.95,0.95,"core,gemma"
+Qwen3-235B-A22B-Thinking-2507,Qwen3-235B-A22B-Thinking-2507 (think),think,General,General,Qwen3,official,3581,0.9243,0.9226,,1.0,1.0,0,913,314,235.1,22,0.93,,"core,qwen,baseline"
+Qwen3.8-27B,Qwen3.8-27B (think),think,General,General,Qwen3.8,official,3581,0.924,0.9207,0.9363,0.9992,0.9992,3,714,120,27.8,27.8,0.925,0.95,"core,qwen"
+Weblab-MedLLM-Qwen3-235B-Thinking,Weblab-MedLLM-Qwen3-235B-Thinking (think),think,Medical,Medical (NEDO),Qwen3,greedy,3581,0.9238,0.9213,,1.0,1.0,0,906,336,235.1,22,0.935,,nedo
+Weblab-MedLLM-GLM-4.7,Weblab-MedLLM-GLM-4.7 (think),think,Medical,Medical (NEDO),GLM,greedy,3581,0.9238,0.9213,,0.9908,0.9911,27,1036,291,355,32,0.9325,,nedo
+Qwen3-235B-A22B-Thinking-2507,Qwen3-235B-A22B-Thinking-2507 (think),think,General,General,Qwen3,greedy,3581,0.9221,0.9173,,1.0,1.0,0,884,313,235.1,22,0.93,,t0cmp
+GPT-OSS-Swallow-120B-RL-v0.1,GPT-OSS-Swallow-120B-RL-v0.1 (think),think,Japanese,Japanese,gpt-oss,official,3581,0.9148,0.9067,,0.9983,0.9983,1,483,177,116.8,5.1,0.9525,,"baseline,swallow"
+Qwen3-235B-A22B-Instruct-2507,Qwen3-235B-A22B-Instruct-2507 (no think),nothink,General,General,Qwen3,official,3581,0.9134,0.907,,1.0,1.0,0,0,445,235.1,22,0.92,,"v1,qwen"
+Llama-4-Maverick-17B-128E-Instruct,Llama-4-Maverick-17B-128E-Instruct (no think),nothink,General,General,Llama,official,3581,0.9109,0.907,,0.9841,1.0,0,0,528,402,17,0.915,,"v1,llama"
+Weblab-MedLLM-gpt-oss-120b,Weblab-MedLLM-gpt-oss-120b (think),think,Medical,Medical (NEDO),gpt-oss,greedy,3581,0.9106,0.9031,,0.9911,0.9997,1,438,182,116.8,5.1,0.935,,nedo
+gpt-oss-120b-effort-high,gpt-oss-120b (think),think,General,General,gpt-oss,official,3581,0.9042,0.8964,,0.9927,0.9989,0,1148,109,116.8,5.1,0.93,,"effort,gptoss"
+Medical-GPT-OSS-Swallow-120B,Medical-GPT-OSS-Swallow-120B (think),think,Medical,Medical (NEDO),gpt-oss,official,3581,0.902,0.8908,,0.9969,0.9978,0,334,107,116.8,5.1,0.92,,nedo
+GPT-OSS-Swallow-120B-SFT-v0.1,GPT-OSS-Swallow-120B-SFT-v0.1 (think),think,Japanese,Japanese,gpt-oss,official,3581,0.9011,0.8903,,0.9953,0.9983,0,248,63,116.8,5.1,0.9425,,"v1,swallow"
+gpt-oss-120b,gpt-oss-120b (think),think,General,General,gpt-oss,greedy,3581,0.8922,0.8863,,0.9712,0.9989,0,291,81,116.8,5.1,0.895,,t0cmp
+gemma-4-12B-it,gemma-4-12B-it (think),think,General,General,Gemma 4,official,3581,0.8861,0.8875,0.8956,0.9992,0.9992,3,1514,368,12.0,12.0,0.8825,0.885,"core,gemma"
+gpt-oss-120b,gpt-oss-120b (think),think,General,General,gpt-oss,official,3581,0.8858,0.8813,,0.9821,0.9989,0,316,85,116.8,5.1,0.91,,"baseline,compare,gptoss"
+Medical-Qwen3-Swallow-30B-A3B,Medical-Qwen3-Swallow-30B-A3B (think),think,Medical,Medical (NEDO),Qwen3,official,3581,0.8813,0.8769,,0.9891,0.9975,3,233,5,30.5,3.3,0.9075,,nedo
+Qwen3-Swallow-32B-RL-v0.2,Qwen3-Swallow-32B-RL-v0.2 (think),think,Japanese,Japanese,Qwen3,official,3581,0.881,0.8769,,0.9961,0.9978,1,401,155,32.8,32.8,0.8825,,"baseline,swallow"
+Qwen3-30B-A3B-Thinking-2507,Qwen3-30B-A3B-Thinking-2507 (think),think,General,General,Qwen3,official,3581,0.8757,0.8718,,1.0,1.0,0,1069,300,30.5,3.3,0.8725,,"compare,v1,qwen"
+Qwen3-Swallow-30B-A3B-RL-v0.2,Qwen3-Swallow-30B-A3B-RL-v0.2 (think),think,Japanese,Japanese,Qwen3,official,3581,0.8715,0.8685,,0.9969,0.9986,4,464,131,30.5,3.3,0.905,,"baseline,swallow"
+GPT-OSS-Swallow-20B-RL-v0.1,GPT-OSS-Swallow-20B-RL-v0.1 (think),think,Japanese,Japanese,gpt-oss,official,3581,0.8674,0.8643,,0.9897,0.9916,30,657,118,20.9,3.6,0.8875,,"v1,swallow"
+Qwen3-Swallow-32B-SFT-v0.2,Qwen3-Swallow-32B-SFT-v0.2 (think),think,Japanese,Japanese,Qwen3,official,3581,0.866,0.8665,,0.9966,0.9992,0,233,32,32.8,32.8,0.875,,"v1,swallow"
+llm-jp-4-33b-thinking-effort-high,llm-jp-4-33b-thinking (think),think,Japanese,Japanese,llm-jp-4,greedy,3581,0.8609,0.8534,,0.9849,0.9886,25,3610,339,33.2,33.2,0.885,,"effort,llmjp"
+Llama-4-Scout-17B-16E-Instruct,Llama-4-Scout-17B-16E-Instruct (no think),nothink,General,General,Llama,official,3581,0.8598,0.857,,0.9629,1.0,0,0,458,109,17,0.8825,,"v1,llama"
+Qwen3-32B,Qwen3-32B (think),think,General,General,Qwen3,official,3581,0.8556,0.8517,,0.9983,0.9986,5,595,3,32.8,32.8,0.88,,"baseline,compare,qwen"
+llm-jp-4-33b-thinking,llm-jp-4-33b-thinking (think),think,Japanese,Japanese,llm-jp-4,greedy,3581,0.8551,0.847,,0.998,0.998,2,1154,206,33.2,33.2,0.88,,"core,llmjp"
+gpt-oss-120b-effort-low,gpt-oss-120b (think),think,General,General,gpt-oss,official,3581,0.852,0.8431,,0.9805,0.9975,0,66,85,116.8,5.1,0.905,,"effort,gptoss"
+Qwen3-Swallow-30B-A3B-SFT-v0.2,Qwen3-Swallow-30B-A3B-SFT-v0.2 (think),think,Japanese,Japanese,Qwen3,official,3581,0.8481,0.8442,,0.971,0.9983,2,239,5,30.5,3.3,0.8725,,"v1,swallow"
+gpt-oss-20b-effort-high,gpt-oss-20b (think),think,General,General,gpt-oss,official,3581,0.8478,0.8358,,0.9777,0.9961,0,1585,49,20.9,3.6,0.86,,"effort,gptoss"
+GPT-OSS-Swallow-20B-SFT-v0.1,GPT-OSS-Swallow-20B-SFT-v0.1 (think),think,Japanese,Japanese,gpt-oss,official,3581,0.8456,0.8378,,0.9698,0.9997,0,241,40,20.9,3.6,0.875,,"v1,swallow"
+Qwen3-30B-A3B,Qwen3-30B-A3B (think),think,General,General,Qwen3,official,3581,0.8442,0.845,,1.0,1.0,0,812,3,30.5,3.3,0.8425,,"baseline,compare,qwen"
+Qwen3-30B-A3B-Instruct-2507,Qwen3-30B-A3B-Instruct-2507 (no think),nothink,General,General,Qwen3,official,3581,0.8414,0.8405,,0.9961,0.9989,13,0,529,30.5,3.3,0.8725,,"compare,v1,qwen"
+gpt-oss-20b,gpt-oss-20b (think),think,General,General,gpt-oss,official,3581,0.8216,0.8176,,0.95,0.9958,0,473,64,20.9,3.6,0.835,,"compare,v1,gptoss"
+llm-jp-4-32b-a3b-thinking-effort-high,llm-jp-4-32b-a3b-thinking (think),think,Japanese,Japanese,llm-jp-4,greedy,3581,0.816,0.8112,,0.9601,0.9763,76,977,157,32,3,0.8275,,"effort,llmjp"
+Qwen3-Swallow-8B-RL-v0.2,Qwen3-Swallow-8B-RL-v0.2 (think),think,Japanese,Japanese,Qwen3,official,3581,0.8149,0.8112,,0.9922,0.9969,2,564,127,8.2,8.2,0.83,,"baseline,swallow"
+llm-jp-4-32b-a3b-thinking,llm-jp-4-32b-a3b-thinking (think),think,Japanese,Japanese,llm-jp-4,greedy,3581,0.8137,0.8082,,0.9355,0.9992,0,293,5,32,3,0.835,,"compare,v1,llmjp"
+GLM-4.7-Flash,GLM-4.7-Flash (think),think,General,General,GLM,official,3581,0.8087,0.7964,,0.9916,0.9958,1,2024,372,31.2,3.0,0.83,,core
+Qwen3-32B-nothink,Qwen3-32B (no think),nothink,General,General,Qwen3,official,3581,0.8065,0.7967,,0.9866,0.9872,1,0,385,32.8,32.8,0.835,,"baseline_nothink,qwen"
+Medical-Qwen3-Swallow-32B,Medical-Qwen3-Swallow-32B (think),think,Medical,Medical (NEDO),Qwen3,official,3581,0.8006,0.7998,,0.9793,0.9799,59,0,262,32.8,32.8,0.8675,,nedo
+llm-jp-4-33b-thinking-effort-low,llm-jp-4-33b-thinking (think),think,Japanese,Japanese,llm-jp-4,greedy,3581,0.7975,0.7948,,0.9961,0.9964,1,276,190,33.2,33.2,0.8375,,"effort,llmjp"
+medgemma-27b-it,medgemma-27b-it (think),think,Medical,Medical (MedGemma),Gemma 3,greedy,3581,0.7928,0.7922,0.792,0.9807,0.9852,69,0,615,28.8,28.8,0.81,0.8075,"core,gemma"
+Medical-Qwen3-Swallow-8B,Medical-Qwen3-Swallow-8B (think),think,Medical,Medical (NEDO),Qwen3,official,3581,0.7886,0.7822,,0.9291,0.9662,2,268,62,8.2,8.2,0.805,,nedo
+Qwen3-8B,Qwen3-8B (think),think,General,General,Qwen3,official,3581,0.7869,0.7827,,0.9997,0.9997,1,1048,179,8.2,8.2,0.8125,,"baseline,qwen"
+llm-jp-4-8b-thinking,llm-jp-4-8b-thinking (think),think,Japanese,Japanese,llm-jp-4,greedy,3581,0.7836,0.7844,,0.9986,0.9992,2,306,49,8,8,0.805,,"v1,llmjp"
+llm-jp-4-8b-thinking-effort-high,llm-jp-4-8b-thinking (think),think,Japanese,Japanese,llm-jp-4,greedy,3581,0.7827,0.7791,,0.9668,0.967,115,1118,77,8,8,0.7975,,"effort,llmjp"
+Llama-3.3-70B-Instruct,Llama-3.3-70B-Instruct (no think),nothink,General,General,Llama,official,3581,0.7822,0.7797,,0.9983,0.9992,4,0,159,70.6,70.6,0.805,,"v1,llama"
+Qwen3-Swallow-8B-SFT-v0.2,Qwen3-Swallow-8B-SFT-v0.2 (think),think,Japanese,Japanese,Qwen3,official,3581,0.7819,0.7819,,0.9966,0.9978,1,256,67,8.2,8.2,0.795,,"v1,swallow"
+Qwen3-30B-A3B-nothink,Qwen3-30B-A3B (no think),nothink,General,General,Qwen3,official,3581,0.7788,0.7749,,0.986,0.9888,5,0,374,30.5,3.3,0.7975,,"baseline_nothink,compare,qwen"
+SIP-jmed-llm-3-8x13b-OP-32k-R0.1,SIP-jmed-llm-3-8x13b-OP-32k-R0.1 (no think),nothink,Medical,Medical (SIP),SIP-jmed-3,greedy,3581,0.7788,0.7643,,0.5004,0.983,0,549,7,73.2,22,0.8225,,"core,sip"
+Qwen3-4B-Thinking-2507,Qwen3-4B-Thinking-2507 (think),think,General,General,Qwen3,official,3581,0.7758,0.7749,,0.9997,0.9997,1,2289,382,4.0,4.0,0.7625,,"v1,qwen"
+gemma-4-E4B-it,gemma-4-E4B-it (think),think,General,General,Gemma 4,official,3581,0.7688,0.7668,0.7727,0.9779,0.9894,0,891,420,8.0,4.5,0.7925,0.795,"core,gemma"
+llm-jp-4-32b-a3b-thinking-effort-low,llm-jp-4-32b-a3b-thinking (think),think,Japanese,Japanese,llm-jp-4,greedy,3581,0.7632,0.7601,,0.8827,0.9983,1,61,3,32,3,0.815,,"effort,llmjp"
+gemma-3-27b-it,gemma-3-27b-it (no think),nothink,General,General,Gemma 3,greedy,3581,0.7442,0.7367,,0.998,0.998,2,0,285,27.4,27.4,0.7875,,t0cmp
+gemma-3-27b-it,gemma-3-27b-it (no think),nothink,General,General,Gemma 3,official,3581,0.7428,0.74,0.7484,0.9983,0.9983,0,0,287,27.4,27.4,0.79,0.79,"baseline,gemma"
+SIP-jmed-llm-3-8x13b-AC-32k-instruct,SIP-jmed-llm-3-8x13b-AC-32k-instruct (no think),nothink,Medical,Medical (SIP),SIP-jmed-3,greedy,3581,0.7425,0.7397,,0.6297,0.9972,0,0,3,73.2,22,0.7825,,"core,sip"
+gpt-oss-20b-effort-low,gpt-oss-20b (think),think,General,General,gpt-oss,official,3581,0.7353,0.7308,,0.9693,0.9944,0,69,81,20.9,3.6,0.75,,"effort,gptoss"
+llm-jp-4-8b-thinking-effort-low,llm-jp-4-8b-thinking (think),think,Japanese,Japanese,llm-jp-4,greedy,3581,0.7288,0.7233,,0.9975,0.9975,0,64,53,8,8,0.7675,,"effort,llmjp"
+Qwen3-4B-Instruct-2507,Qwen3-4B-Instruct-2507 (no think),nothink,General,General,Qwen3,official,3581,0.6878,0.6836,,0.9944,0.9969,17,0,678,4.0,4.0,0.72,,"v1,qwen"
+gemma-3-12b-it,gemma-3-12b-it (no think),nothink,General,General,Gemma 3,official,3581,0.6769,0.6719,0.6744,0.9994,0.9997,0,0,274,12.2,12.2,0.725,0.7275,"baseline,gemma"
+Qwen3-8B-nothink,Qwen3-8B (no think),nothink,General,General,Qwen3,official,3581,0.6657,0.6649,,0.9897,0.9913,5,0,443,8.2,8.2,0.7075,,"baseline_nothink,qwen"
+llm-jp-4-8b-instruct,llm-jp-4-8b-instruct (no think),nothink,Japanese,Japanese,llm-jp-4,greedy,3581,0.6509,0.6521,,0.9916,0.9961,0,0,3,8,8,0.695,,"v1,llmjp"
+gemma-4-E2B-it,gemma-4-E2B-it (think),think,General,General,Gemma 4,official,3581,0.6345,0.6454,0.6386,0.9651,0.9916,1,855,225,5.1,2.3,0.685,0.6975,"core,gemma"
+llm-jp-3.1-8x13b-instruct4,llm-jp-3.1-8x13b-instruct4 (no think),nothink,Japanese,Japanese,SIP-jmed-3,greedy,3581,0.5945,0.5923,,0.3605,0.9966,2,0,1,73.2,22,0.63,,llmjp
+llm-jp-3.1-13b-instruct4,llm-jp-3.1-13b-instruct4 (no think),nothink,Japanese,Japanese,SIP-jmed-3,greedy,3581,0.4951,0.4982,,0.9732,0.9802,5,0,281,13.7,13.7,0.53,,"v1,llmjp"
+gemma-3-4b-it,gemma-3-4b-it (no think),nothink,General,General,Gemma 3,official,3581,0.4298,0.4278,0.4261,0.9961,0.9961,1,0,229,4.3,4.3,0.5,0.4825,"baseline,gemma"
