@@ -57,11 +57,13 @@ SIP-jmed-llm-3-8x13b-OP-32k-R0.1,SIP-jmed-llm-3-8x13b-OP-32k-R0.1,nothink,Medica
 Qwen3-4B-Thinking-2507,Qwen3-4B-Thinking-2507,think,General,General,Qwen3,official,3581,0.7758,0.7749,,0.9997,0.9997,1,2289,382,4.0,4.0,0.7625,,"v1,qwen"
 gemma-4-E4B-it,gemma-4-E4B-it,think,General,General,Gemma 4,official,3581,0.7688,0.7668,0.7727,0.9779,0.9894,0,891,420,8.0,4.5,0.7925,0.795,"core,gemma"
 llm-jp-4-32b-a3b-thinking-effort-low,llm-jp-4-32b-a3b-thinking,think,Japanese,Japanese,llm-jp-4,greedy,3581,0.7632,0.7601,,0.8827,0.9983,1,61,3,32,3,0.815,,"effort,llmjp"
+SIP-jmed-llm-2-8x13b-OP-instruct,SIP-jmed-llm-2-8x13b-OP-instruct,nothink,Medical,Medical (SIP),SIP-jmed-2,greedy,3581,0.745,0.7459,,0.7855,0.9832,0,0,3,73.2,22,0.765,,"v1,sip"
 gemma-3-27b-it,gemma-3-27b-it,nothink,General,General,Gemma 3,greedy,3581,0.7442,0.7367,,0.998,0.998,2,0,285,27.4,27.4,0.7875,,t0cmp
 gemma-3-27b-it,gemma-3-27b-it,nothink,General,General,Gemma 3,official,3581,0.7428,0.74,0.7484,0.9983,0.9983,0,0,287,27.4,27.4,0.79,0.79,"baseline,gemma"
 SIP-jmed-llm-3-8x13b-AC-32k-instruct,SIP-jmed-llm-3-8x13b-AC-32k-instruct,nothink,Medical,Medical (SIP),SIP-jmed-3,greedy,3581,0.7425,0.7397,,0.6297,0.9972,0,0,3,73.2,22,0.7825,,"core,sip"
 gpt-oss-20b-effort-low,gpt-oss-20b,think,General,General,gpt-oss,official,3581,0.7353,0.7308,,0.9693,0.9944,0,69,81,20.9,3.6,0.75,,"effort,gptoss"
 llm-jp-4-8b-thinking-effort-low,llm-jp-4-8b-thinking,think,Japanese,Japanese,llm-jp-4,greedy,3581,0.7288,0.7233,,0.9975,0.9975,0,64,53,8,8,0.7675,,"effort,llmjp"
+SIP-jmed-llm-3-13b-OP-32k-R0.1,SIP-jmed-llm-3-13b-OP-32k-R0.1,nothink,Medical,Medical (SIP),SIP-jmed-3,greedy,3581,0.7001,0.6976,,0.3806,0.9944,1,550,5,13.7,13.7,0.755,,"v1,sip"
 Qwen3-4B-Instruct-2507,Qwen3-4B-Instruct-2507,nothink,General,General,Qwen3,official,3581,0.6878,0.6836,,0.9944,0.9969,17,0,678,4.0,4.0,0.72,,"v1,qwen"
 gemma-3-12b-it,gemma-3-12b-it,nothink,General,General,Gemma 3,official,3581,0.6769,0.6719,0.6744,0.9994,0.9997,0,0,274,12.2,12.2,0.725,0.7275,"baseline,gemma"
 Qwen3-8B-nothink,Qwen3-8B (no think),nothink,General,General,Qwen3,official,3581,0.6657,0.6649,,0.9897,0.9913,5,0,443,8.2,8.2,0.7075,,"baseline_nothink,qwen"

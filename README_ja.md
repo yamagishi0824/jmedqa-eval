@@ -184,7 +184,8 @@ a. ...
 ## 結果
 
 これまでに評価したモデルの正答率です（ルールベースの採点、元の問題文）。評価したモデルが増えたら、この表を更新します。
-すべての統計値は [`results/`](results/) にあります。
+すべての統計値は [`results/`](results/) にあります（VLM の画像依存度別の成績は
+[`results/vision_by_dependency.md`](results/vision_by_dependency.md)）。
 
 - **All**: 3,581 問、**2026**: 2026 年の 400 問。
 - **With images**: VLM のみ。画像参照のある問題を画像付きで解かせた結果です（– は画像ありでは評価していない回。主に画像エンコーダの無いモデル）。
@@ -243,8 +244,10 @@ a. ...
 | SIP-jmed-llm-3-8x13b-OP-32k-R0.1 | Medical (SIP) | greedy | 0.779 | 0.823 | – | – |
 | Qwen3-4B-Thinking-2507 | General | official | 0.776 | 0.762 | – | – |
 | gemma-4-E4B-it | General | official | 0.769 | 0.792 | 0.773 | 0.795 |
+| SIP-jmed-llm-2-8x13b-OP-instruct | Medical (SIP) | greedy | 0.745 | 0.765 | – | – |
 | gemma-3-27b-it | General | official | 0.743 | 0.790 | 0.748 | 0.790 |
 | SIP-jmed-llm-3-8x13b-AC-32k-instruct | Medical (SIP) | greedy | 0.743 | 0.782 | – | – |
+| SIP-jmed-llm-3-13b-OP-32k-R0.1 | Medical (SIP) | greedy | 0.700 | 0.755 | – | – |
 | Qwen3-4B-Instruct-2507 | General | official | 0.688 | 0.720 | – | – |
 | gemma-3-12b-it | General | official | 0.677 | 0.725 | 0.674 | 0.728 |
 | Qwen3-8B (no think) | General | official | 0.666 | 0.708 | – | – |

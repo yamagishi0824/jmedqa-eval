@@ -50,8 +50,10 @@
 | SIP-jmed-llm-3-8x13b-OP-32k-R0.1 | Medical (SIP) | greedy | 0.779 | 0.823 | – | – |
 | Qwen3-4B-Thinking-2507 | General | official | 0.776 | 0.762 | – | – |
 | gemma-4-E4B-it | General | official | 0.769 | 0.792 | 0.773 | 0.795 |
+| SIP-jmed-llm-2-8x13b-OP-instruct | Medical (SIP) | greedy | 0.745 | 0.765 | – | – |
 | gemma-3-27b-it | General | official | 0.743 | 0.790 | 0.748 | 0.790 |
 | SIP-jmed-llm-3-8x13b-AC-32k-instruct | Medical (SIP) | greedy | 0.743 | 0.782 | – | – |
+| SIP-jmed-llm-3-13b-OP-32k-R0.1 | Medical (SIP) | greedy | 0.700 | 0.755 | – | – |
 | Qwen3-4B-Instruct-2507 | General | official | 0.688 | 0.720 | – | – |
 | gemma-3-12b-it | General | official | 0.677 | 0.725 | 0.674 | 0.728 |
 | Qwen3-8B (no think) | General | official | 0.666 | 0.708 | – | – |

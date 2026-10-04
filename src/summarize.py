@@ -16,6 +16,7 @@ Outputs (in --out-dir):
   vision_by_dependency.csv    image-referencing questions by image_dependency: original -> no_image -> with images
   summary.md                  Markdown tables for the README (all questions and exam year 2026; original text,
                               and with images for VLMs)
+  vision_by_dependency.md     the same as vision_by_dependency.csv as a Markdown table (original -> with images)
 """
 import argparse
 import csv
@@ -103,6 +104,25 @@ def markdown_tables(summary: List[Dict]) -> str:
     return md
 
 
+def vision_dependency_table(by_dep: List[Dict], summary: List[Dict]) -> str:
+    """VLMs x image_dependency: accuracy on the image-referencing questions, original text -> with images."""
+    deps = ["enough text", "not enough text", "image question", "image only"]
+    n = {d: next((x["n"] for x in by_dep if x["image_dependency"] == d), 0) for d in deps}
+    names = {s["model"]: s["display_name"] for s in summary}
+    order = [s["model"] for s in summary if s["acc_image"] != ""]
+    cell = {(x["model"], x["image_dependency"]): x for x in by_dep}
+    md = ("Image-referencing questions by `image_dependency`: accuracy with the original text (no image) -> with images\n"
+          "(difference in points). For sampled models the difference also includes run-to-run sampling variation.\n\n"
+          "| Model | " + " | ".join(f"{d} ({n[d]})" for d in deps) + " |\n|---|" + "---|" * len(deps) + "\n")
+    for m in order:
+        cols = []
+        for d in deps:
+            x = cell.get((m, d))
+            cols.append("" if x is None else f"{x['acc_original']:.3f} → {x['acc_image']:.3f} ({x['image_gain_pt']:+.1f})")
+        md += f"| {names.get(m, m)} | " + " | ".join(cols) + " |\n"
+    return md
+
+
 def main() -> None:
     ap = argparse.ArgumentParser()
     ap.add_argument("--out-dir", default="results")
@@ -164,7 +184,8 @@ def main() -> None:
                 by_dep.append({"model": r["name"], "image_dependency": dep, "n": len(ids),
                                "acc_original": round(_acc(orig[i] for i in ids), 4),
                                "acc_no_image": round(_acc(noimg[i] for i in ids), 4),
-                               "acc_image": round(_acc(img[i] for i in ids), 4)})
+                               "acc_image": round(_acc(img[i] for i in ids), 4),
+                               "image_gain_pt": round(100 * (_acc(img[i] for i in ids) - _acc(orig[i] for i in ids)), 1)})
 
     summary.sort(key=lambda x: -x["acc_original"])
     for name, rows_ in (("summary.csv", summary), ("summary_by_year.csv", by_year), ("vision_by_dependency.csv", by_dep)):
@@ -174,6 +195,8 @@ def main() -> None:
                 w.writeheader()
                 w.writerows(rows_)
     (out / "summary.md").write_text(markdown_tables(summary), encoding="utf-8")
+    if by_dep:
+        (out / "vision_by_dependency.md").write_text(vision_dependency_table(by_dep, summary), encoding="utf-8")
     print(f"| model | sampling | original | no_image | image |\n|---|---|---|---|---|")
     for s in summary:
         print(f"| {s['model']} | {s['sampling']} | {s['acc_original']:.3f} | {s['acc_no_image']:.3f} | "
