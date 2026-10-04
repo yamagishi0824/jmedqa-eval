@@ -1,0 +1,86 @@
+# configs/models.tsv — the evaluation registry (one row = one evaluation run).
+# Running, scoring and summarizing all read this file; add a row to evaluate a new model.
+#
+# Columns (tab-separated, "-" = empty):
+#   name      run name (prefix of the output directory; variants such as reasoning effort get their own name)
+#   model     Hugging Face repo id or a local checkpoint directory
+#   profile   key in src/model_profiles.py      mode  think / nothink      tp  tensor-parallel size
+#   sampling  auto (official values if the profile marks them as recommended, otherwise greedy) / greedy / official
+#   kwargs    JSON merged into chat_template_kwargs (e.g. {"reasoning_effort":"high"})
+#   vision    1 = also evaluated with images (IMAGES=1)
+#   groups    comma-separated tags for selection (GROUP=<tag>)
+#   category subgroup family   labels used in tables        total_B active_B   parameters (billions)
+name	model	profile	mode	tp	sampling	kwargs	vision	groups	category	subgroup	family	total_B	active_B
+gemma-4-E2B-it	google/gemma-4-E2B-it	gemma4	think	8	auto	-	1	core,gemma	General	General	Gemma 4	5.1	2.3
+gemma-4-E4B-it	google/gemma-4-E4B-it	gemma4	think	8	auto	-	1	core,gemma	General	General	Gemma 4	8.0	4.5
+gemma-4-12B-it	google/gemma-4-12B-it	gemma4	think	8	auto	-	1	core,gemma	General	General	Gemma 4	12.0	12.0
+gemma-4-26B-A4B-it	google/gemma-4-26B-A4B-it	gemma4	think	8	auto	-	1	core,gemma	General	General	Gemma 4	25.8	3.8
+gemma-4-31B-it	google/gemma-4-31B-it	gemma4	think	8	auto	-	1	core,gemma	General	General	Gemma 4	31.3	31.3
+Qwen3.8-Flash-Next	Qwen/Qwen3.8-Flash-Next	qwen36	think	8	auto	-	1	core,qwen	General	General	Qwen3.8	180	6
+Qwen3.8-27B	Qwen/Qwen3.8-27B	qwen36	think	8	auto	-	1	core,qwen	General	General	Qwen3.8	27.8	27.8
+Qwen3-235B-A22B-Thinking-2507	Qwen/Qwen3-235B-A22B-Thinking-2507	qwen3_2507	think	8	auto	-	0	core,qwen,baseline	General	General	Qwen3	235.1	22
+Qwen3-235B-A22B-Thinking-2507	Qwen/Qwen3-235B-A22B-Thinking-2507	qwen3_2507	think	8	greedy	-	0	t0cmp	General	General	Qwen3	235.1	22
+Qwen3-235B-A22B-Instruct-2507	Qwen/Qwen3-235B-A22B-Instruct-2507	qwen3_2507	nothink	8	auto	-	0	v1,qwen	General	General	Qwen3	235.1	22
+Qwen3-30B-A3B-Thinking-2507	Qwen/Qwen3-30B-A3B-Thinking-2507	qwen3_2507	think	8	auto	-	0	compare,v1,qwen	General	General	Qwen3	30.5	3.3
+Qwen3-30B-A3B-Instruct-2507	Qwen/Qwen3-30B-A3B-Instruct-2507	qwen3_2507	nothink	8	auto	-	0	compare,v1,qwen	General	General	Qwen3	30.5	3.3
+Qwen3-4B-Thinking-2507	Qwen/Qwen3-4B-Thinking-2507	qwen3_2507	think	8	auto	-	0	v1,qwen	General	General	Qwen3	4.0	4.0
+Qwen3-4B-Instruct-2507	Qwen/Qwen3-4B-Instruct-2507	qwen3_2507	nothink	8	auto	-	0	v1,qwen	General	General	Qwen3	4.0	4.0
+GLM-4.7-Flash	zai-org/GLM-4.7-Flash	glm47	think	4	auto	-	0	core	General	General	GLM	31.2	3.0
+GLM-4.7	zai-org/GLM-4.7	glm47_full	think	8	auto	-	0	-	General	General	GLM	355	32
+DeepSeek-V4-Flash-0731	deepseek-ai/DeepSeek-V4-Flash-0731	deepseek_v4	think	8	auto	-	0	core,deepseek	General	General	DeepSeek	284	13
+DeepSeek-V4.1-Flash	deepseek-ai/DeepSeek-V4.1-Flash	deepseek_v41	think	8	auto	-	1	core,deepseek	General	General	DeepSeek	552	16
+DeepSeek-V3.2	deepseek-ai/DeepSeek-V3.2	deepseek_v32	think	8	auto	-	0	core,deepseek	General	General	DeepSeek	671	37
+gpt-oss-120b	openai/gpt-oss-120b	gptoss_openai	think	8	auto	-	0	baseline,compare,gptoss	General	General	gpt-oss	116.8	5.1
+gpt-oss-120b-effort-low	openai/gpt-oss-120b	gptoss_openai	think	8	auto	{"reasoning_effort":"low"}	0	effort,gptoss	General	General	gpt-oss	116.8	5.1
+gpt-oss-120b-effort-high	openai/gpt-oss-120b	gptoss_openai	think	8	auto	{"reasoning_effort":"high"}	0	effort,gptoss	General	General	gpt-oss	116.8	5.1
+gpt-oss-120b	openai/gpt-oss-120b	gptoss_openai	think	8	greedy	-	0	t0cmp	General	General	gpt-oss	116.8	5.1
+gpt-oss-20b	openai/gpt-oss-20b	gptoss_openai	think	8	auto	-	0	compare,v1,gptoss	General	General	gpt-oss	20.9	3.6
+gpt-oss-20b-effort-low	openai/gpt-oss-20b	gptoss_openai	think	8	auto	{"reasoning_effort":"low"}	0	effort,gptoss	General	General	gpt-oss	20.9	3.6
+gpt-oss-20b-effort-high	openai/gpt-oss-20b	gptoss_openai	think	8	auto	{"reasoning_effort":"high"}	0	effort,gptoss	General	General	gpt-oss	20.9	3.6
+Llama-3.3-70B-Instruct	meta-llama/Llama-3.3-70B-Instruct	llama_gc	nothink	8	auto	-	0	v1,llama	General	General	Llama	70.6	70.6
+Llama-4-Scout-17B-16E-Instruct	meta-llama/Llama-4-Scout-17B-16E-Instruct	llama_gc	nothink	8	auto	-	0	v1,llama	General	General	Llama	109	17
+Llama-4-Maverick-17B-128E-Instruct	meta-llama/Llama-4-Maverick-17B-128E-Instruct	llama_gc	nothink	8	auto	-	0	v1,llama	General	General	Llama	402	17
+Qwen3-8B	Qwen/Qwen3-8B	qwen3_hybrid	think	8	auto	-	0	baseline,qwen	General	General	Qwen3	8.2	8.2
+Qwen3-30B-A3B	Qwen/Qwen3-30B-A3B	qwen3_hybrid	think	8	auto	-	0	baseline,compare,qwen	General	General	Qwen3	30.5	3.3
+Qwen3-32B	Qwen/Qwen3-32B	qwen3_hybrid	think	8	auto	-	0	baseline,compare,qwen	General	General	Qwen3	32.8	32.8
+Qwen3-8B-nothink	Qwen/Qwen3-8B	qwen3_hybrid	nothink	8	auto	-	0	baseline_nothink,qwen	General	General	Qwen3	8.2	8.2
+Qwen3-30B-A3B-nothink	Qwen/Qwen3-30B-A3B	qwen3_hybrid	nothink	8	auto	-	0	baseline_nothink,compare,qwen	General	General	Qwen3	30.5	3.3
+Qwen3-32B-nothink	Qwen/Qwen3-32B	qwen3_hybrid	nothink	8	auto	-	0	baseline_nothink,qwen	General	General	Qwen3	32.8	32.8
+gemma-3-4b-it	google/gemma-3-4b-it	gemma3	nothink	8	auto	-	1	baseline,gemma	General	General	Gemma 3	4.3	4.3
+gemma-3-12b-it	google/gemma-3-12b-it	gemma3	nothink	8	auto	-	1	baseline,gemma	General	General	Gemma 3	12.2	12.2
+gemma-3-27b-it	google/gemma-3-27b-it	gemma3	nothink	8	auto	-	1	baseline,gemma	General	General	Gemma 3	27.4	27.4
+gemma-3-27b-it	google/gemma-3-27b-it	gemma3	nothink	8	greedy	-	1	t0cmp	General	General	Gemma 3	27.4	27.4
+Qwen3-Swallow-8B-RL-v0.2	tokyotech-llm/Qwen3-Swallow-8B-RL-v0.2	medswallow_qwen3	think	8	auto	-	0	baseline,swallow	Japanese	Japanese	Qwen3	8.2	8.2
+Qwen3-Swallow-30B-A3B-RL-v0.2	tokyotech-llm/Qwen3-Swallow-30B-A3B-RL-v0.2	medswallow_qwen3	think	8	auto	-	0	baseline,swallow	Japanese	Japanese	Qwen3	30.5	3.3
+Qwen3-Swallow-32B-RL-v0.2	tokyotech-llm/Qwen3-Swallow-32B-RL-v0.2	medswallow_qwen3	think	8	auto	-	0	baseline,swallow	Japanese	Japanese	Qwen3	32.8	32.8
+Qwen3-Swallow-8B-SFT-v0.2	tokyotech-llm/Qwen3-Swallow-8B-SFT-v0.2	medswallow_qwen3	think	8	auto	-	0	v1,swallow	Japanese	Japanese	Qwen3	8.2	8.2
+Qwen3-Swallow-30B-A3B-SFT-v0.2	tokyotech-llm/Qwen3-Swallow-30B-A3B-SFT-v0.2	medswallow_qwen3	think	8	auto	-	0	v1,swallow	Japanese	Japanese	Qwen3	30.5	3.3
+Qwen3-Swallow-32B-SFT-v0.2	tokyotech-llm/Qwen3-Swallow-32B-SFT-v0.2	medswallow_qwen3	think	8	auto	-	0	v1,swallow	Japanese	Japanese	Qwen3	32.8	32.8
+GPT-OSS-Swallow-120B-RL-v0.1	tokyotech-llm/GPT-OSS-Swallow-120B-RL-v0.1	medswallow_gptoss	think	8	auto	-	0	baseline,swallow	Japanese	Japanese	gpt-oss	116.8	5.1
+GPT-OSS-Swallow-120B-SFT-v0.1	tokyotech-llm/GPT-OSS-Swallow-120B-SFT-v0.1	medswallow_gptoss	think	8	auto	-	0	v1,swallow	Japanese	Japanese	gpt-oss	116.8	5.1
+GPT-OSS-Swallow-20B-RL-v0.1	tokyotech-llm/GPT-OSS-Swallow-20B-RL-v0.1	medswallow_gptoss	think	8	auto	-	0	v1,swallow	Japanese	Japanese	gpt-oss	20.9	3.6
+GPT-OSS-Swallow-20B-SFT-v0.1	tokyotech-llm/GPT-OSS-Swallow-20B-SFT-v0.1	medswallow_gptoss	think	8	auto	-	0	v1,swallow	Japanese	Japanese	gpt-oss	20.9	3.6
+llm-jp-4-33b-thinking	llm-jp/llm-jp-4-33b-thinking	llmjp4	think	8	auto	-	0	core,llmjp	Japanese	Japanese	llm-jp-4	33.2	33.2
+llm-jp-4-33b-thinking-effort-low	llm-jp/llm-jp-4-33b-thinking	llmjp4	think	8	auto	{"reasoning_effort":"low"}	0	effort,llmjp	Japanese	Japanese	llm-jp-4	33.2	33.2
+llm-jp-4-33b-thinking-effort-high	llm-jp/llm-jp-4-33b-thinking	llmjp4	think	8	auto	{"reasoning_effort":"high"}	0	effort,llmjp	Japanese	Japanese	llm-jp-4	33.2	33.2
+llm-jp-4-32b-a3b-thinking	llm-jp/llm-jp-4-32b-a3b-thinking	llmjp4	think	4	auto	-	0	compare,v1,llmjp	Japanese	Japanese	llm-jp-4	32	3
+llm-jp-4-32b-a3b-thinking-effort-low	llm-jp/llm-jp-4-32b-a3b-thinking	llmjp4	think	4	auto	{"reasoning_effort":"low"}	0	effort,llmjp	Japanese	Japanese	llm-jp-4	32	3
+llm-jp-4-32b-a3b-thinking-effort-high	llm-jp/llm-jp-4-32b-a3b-thinking	llmjp4	think	4	auto	{"reasoning_effort":"high"}	0	effort,llmjp	Japanese	Japanese	llm-jp-4	32	3
+llm-jp-4-8b-thinking	llm-jp/llm-jp-4-8b-thinking	llmjp4	think	8	auto	-	0	v1,llmjp	Japanese	Japanese	llm-jp-4	8	8
+llm-jp-4-8b-thinking-effort-low	llm-jp/llm-jp-4-8b-thinking	llmjp4	think	8	auto	{"reasoning_effort":"low"}	0	effort,llmjp	Japanese	Japanese	llm-jp-4	8	8
+llm-jp-4-8b-thinking-effort-high	llm-jp/llm-jp-4-8b-thinking	llmjp4	think	8	auto	{"reasoning_effort":"high"}	0	effort,llmjp	Japanese	Japanese	llm-jp-4	8	8
+llm-jp-4-8b-instruct	llm-jp/llm-jp-4-8b-instruct	llmjp4	nothink	8	auto	-	0	v1,llmjp	Japanese	Japanese	llm-jp-4	8	8
+llm-jp-3.1-8x13b-instruct4	llm-jp/llm-jp-3.1-8x13b-instruct4	llmjp31	nothink	8	auto	-	0	llmjp	Japanese	Japanese	SIP-jmed-3	73.2	22
+llm-jp-3.1-13b-instruct4	llm-jp/llm-jp-3.1-13b-instruct4	llmjp31	nothink	8	auto	-	0	v1,llmjp	Japanese	Japanese	SIP-jmed-3	13.7	13.7
+Medical-Qwen3-Swallow-8B	tokyotech-llm/Medical-Qwen3-Swallow-8B	medswallow_qwen3	think	8	auto	-	0	nedo	Medical	Medical (NEDO)	Qwen3	8.2	8.2
+Medical-Qwen3-Swallow-30B-A3B	tokyotech-llm/Medical-Qwen3-Swallow-30B-A3B	medswallow_qwen3	think	8	auto	-	0	nedo	Medical	Medical (NEDO)	Qwen3	30.5	3.3
+Medical-Qwen3-Swallow-32B	tokyotech-llm/Medical-Qwen3-Swallow-32B	medswallow_qwen3	think	8	auto	-	0	nedo	Medical	Medical (NEDO)	Qwen3	32.8	32.8
+Medical-GPT-OSS-Swallow-120B	tokyotech-llm/Medical-GPT-OSS-Swallow-120B	medswallow_gptoss	think	8	auto	-	0	nedo	Medical	Medical (NEDO)	gpt-oss	116.8	5.1
+Weblab-MedLLM-Qwen3-235B-Thinking	weblab-LLM-M/Weblab-MedLLM-Qwen3-235B-Thinking	weblab_qwen3_thinking	think	8	auto	-	0	nedo	Medical	Medical (NEDO)	Qwen3	235.1	22
+Weblab-MedLLM-gpt-oss-120b	weblab-LLM-M/Weblab-MedLLM-gpt-oss-120b	weblab_gptoss	think	8	auto	-	0	nedo	Medical	Medical (NEDO)	gpt-oss	116.8	5.1
+Weblab-MedLLM-GLM-4.7	weblab-LLM-M/Weblab-MedLLM-GLM-4.7	weblab_glm47	think	8	auto	-	0	nedo	Medical	Medical (NEDO)	GLM	355	32
+medgemma-27b-it	google/medgemma-27b-it	medgemma	think	8	auto	-	1	core,gemma	Medical	Medical (MedGemma)	Gemma 3	28.8	28.8
+SIP-jmed-llm-3-8x13b-OP-32k-R0.1	SIP-med-LLM/SIP-jmed-llm-3-8x13b-OP-32k-R0.1	sipjmed3	nothink	8	auto	-	0	core,sip	Medical	Medical (SIP)	SIP-jmed-3	73.2	22
+SIP-jmed-llm-3-8x13b-AC-32k-instruct	SIP-med-LLM/SIP-jmed-llm-3-8x13b-AC-32k-instruct	sipjmed3	nothink	8	auto	-	0	core,sip	Medical	Medical (SIP)	SIP-jmed-3	73.2	22
+SIP-jmed-llm-3-13b-OP-32k-R0.1	SIP-med-LLM/SIP-jmed-llm-3-13b-OP-32k-R0.1	sipjmed3	nothink	8	auto	-	0	v1,sip	Medical	Medical (SIP)	SIP-jmed-3	13.7	13.7
+SIP-jmed-llm-2-8x13b-OP-instruct	SIP-med-LLM/SIP-jmed-llm-2-8x13b-OP-instruct	sipjmed2	nothink	8	auto	-	0	v1,sip	Medical	Medical (SIP)	SIP-jmed-2	73.2	22

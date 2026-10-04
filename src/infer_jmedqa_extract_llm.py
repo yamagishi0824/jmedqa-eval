@@ -158,6 +158,11 @@ def is_true(value: Any) -> bool:
 
 
 def answer_mode(row: Dict[str, Any]) -> str:
+    # Prefer the dataset's answer_mode column; the heuristic below misclassified calculation questions
+    # without options as "option".
+    given = str(row.get("answer_mode", "")).strip()
+    if given in ("option", "numeric"):
+        return given
     if not is_true(row.get("is_calc", False)):
         return "option"
 
@@ -554,7 +559,11 @@ def run_extract_job(
 
             allowed = sorted([k for k in row.get("_options_obj", {}).keys() if isinstance(k, str)])
             row_mode = row.get("_answer_mode", "option")
-            pred_stage1_direct = parse_prediction_from_text(text1, row_mode, allowed)
+            # stage1 outputs of infer_jmedqa.py carry the rule-based prediction (src/answer_parser.py)
+            if "prediction_rule" in row:
+                pred_stage1_direct = str(row.get("prediction_rule") or "")
+            else:
+                pred_stage1_direct = parse_prediction_from_text(text1, row_mode, allowed)
             pred_extracted = parse_prediction_from_text(text2, row_mode, allowed)
             flags = analyze_extraction(row, pred_stage1_direct, pred_extracted)
 

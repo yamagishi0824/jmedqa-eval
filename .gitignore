@@ -2,15 +2,15 @@
 scripts/env.sh
 .env
 
-# Input dataset (not redistributed from this repository)
+# Input dataset and images (not redistributed from this repository)
 data/*.csv
 data/*.jsonl
+data/hf_jmedqa/
 
 # Run artifacts
 outputs/
 outputs_*/
-results/
-logs_slurm/
+# results/ holds summary statistics only (no raw outputs); see results/README.md
 logs/
 
 # Caches and virtualenvs

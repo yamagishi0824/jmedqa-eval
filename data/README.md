@@ -15,7 +15,17 @@ shutil.copy(src, 'data/jmedqa.csv')
 "
 ```
 
-`data/*.csv` and `data/*.jsonl` are git-ignored; the dataset is not redistributed
+For the vision evaluation, download the full dataset including `images/` into `data/hf_jmedqa/`
+(or point `JMEDQA_IMAGE_ROOT` at an existing copy):
+
+```bash
+uv run python -c "
+from huggingface_hub import snapshot_download
+snapshot_download('SIP-med-LLM/JMedQA', repo_type='dataset', local_dir='data/hf_jmedqa')
+"
+```
+
+`data/*.csv`, `data/*.jsonl` and `data/hf_jmedqa/` are git-ignored; the dataset is not redistributed
 from this repository. See the top-level README for the columns used by the
 pipeline, and `src/prepare_jmedqa.py` for converting a JSONL export into the same
 CSV shape.
