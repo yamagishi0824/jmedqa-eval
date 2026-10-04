@@ -49,8 +49,8 @@ def _acc(values) -> float:
     return sum(values) / len(values) if values else float("nan")
 
 
-def _f(x) -> str:
-    return "" if x == "" else f"{x:.3f}"
+def _f(x, missing: str = "") -> str:
+    return missing if x == "" else f"{x:.3f}"
 
 
 def markdown_tables(summary: List[Dict]) -> str:
@@ -58,7 +58,7 @@ def markdown_tables(summary: List[Dict]) -> str:
     head = ("| Model | Category | Sampling | All (3,581) | 2026 (400) | With images: all | With images: 2026 |\n"
             "|---|---|---|---|---|---|---|\n")
     row = lambda s: (f"| {s['model']} | {s['subgroup'] or s['category']} | {s['sampling']} | {_f(s['acc_original'])} | "
-                     f"{_f(s['acc_original_2026'])} | {_f(s['acc_image'])} | {_f(s['acc_image_2026'])} |\n")
+                     f"{_f(s['acc_original_2026'])} | {_f(s['acc_image'], '–')} | {_f(s['acc_image_2026'], '–')} |\n")
     groups = lambda s: s["groups"].split(",")
     main = [s for s in summary if "effort" not in groups(s) and "t0cmp" not in groups(s)]
     effort = [s for s in summary if "effort" in groups(s)]
